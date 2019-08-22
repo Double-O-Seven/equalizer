@@ -12,7 +12,7 @@ class EquivalenceImplTest implements EquivalenceTest {
     }
 
     @Test
-    void builderShouldEquivalenceImpl() {
+    void builderShouldBuildEquivalenceImpl() {
         Equivalence<EquivalenceTest.TestData> equivalence = new EquivalenceImpl.Builder<>(EquivalenceTest.TestData.class).build();
 
         assertThat(equivalence)
