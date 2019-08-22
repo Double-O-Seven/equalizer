@@ -1,6 +1,5 @@
 package ch.leadrian.equalizer;
 
-import java.util.function.BiPredicate;
 import java.util.function.Function;
 
 public interface HashBuilder<T> {
@@ -12,8 +11,6 @@ public interface HashBuilder<T> {
     HashBuilder<T> hashDeep(Function<? super T, ?> valueExtractor);
 
     HashBuilder<T> hashIdentity(Function<? super T, ?> valueExtractor);
-
-    HashBuilder<T> equalIf(BiPredicate<? super T, ? super T> condition);
 
     Hash<T> build();
 
