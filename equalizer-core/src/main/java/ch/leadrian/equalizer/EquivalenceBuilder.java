@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 public interface EquivalenceBuilder<T> {
 
-    EquivalenceBuilder<T> compareSuper(Equivalence<? super T> superEquivalence);
+    EquivalenceBuilder<T> withSuper(Equivalence<? super T> superEquivalence);
 
     EquivalenceBuilder<T> compare(Function<? super T, ?> valueExtractor);
 
