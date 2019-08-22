@@ -32,8 +32,8 @@ final class EquivalenceAndHashImpl<T> implements EquivalenceAndHash<T> {
 
         Builder(Class<T> targetClass) {
             requireNonNull(targetClass, "targetClass must not be null");
-            this.equivalenceBuilder = Equalizer.equivalenceBuilder(targetClass);
-            this.hashBuilder = Equalizer.hashBuilder();
+            this.equivalenceBuilder = Equalizer.equalsBuilder(targetClass);
+            this.hashBuilder = Equalizer.hashCodeBuilder();
         }
 
         @Override
