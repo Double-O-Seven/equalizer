@@ -22,4 +22,12 @@ class EqualizerTest {
                 .isInstanceOf(HashImpl.Builder.class);
     }
 
+    @Test
+    void equivalenceAndHashBuilderShouldReturnEquivalenceAndHashImplBuilder() {
+        EquivalenceAndHashBuilder<String> builder = Equalizer.equivalenceAndHashBuilder(String.class);
+
+        assertThat(builder)
+                .isInstanceOf(EquivalenceAndHashImpl.Builder.class);
+    }
+
 }
