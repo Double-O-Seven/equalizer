@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EqualizerTest {
 
     @Test
-    void equalsForShouldReturnEquivalenceImplBuilder() {
-        EquivalenceBuilder<String> builder = Equalizer.equalsFor(String.class);
+    void equivalenceBuilderShouldReturnEquivalenceImplBuilder() {
+        EquivalenceBuilder<String> builder = Equalizer.equivalenceBuilder(String.class);
 
         assertThat(builder)
                 .isInstanceOf(EquivalenceImpl.Builder.class);
