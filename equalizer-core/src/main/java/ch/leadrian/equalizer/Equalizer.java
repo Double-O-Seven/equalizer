@@ -7,8 +7,7 @@ public final class Equalizer {
     }
 
     public static <T> EquivalenceBuilder<T> equalsFor(Class<T> clazz) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new EquivalenceImpl.Builder<>(clazz);
     }
 
     public static <T> HashBuilder<T> hashCodeFor(Class<T> clazz) {
