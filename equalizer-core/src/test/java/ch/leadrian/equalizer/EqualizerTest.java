@@ -14,4 +14,12 @@ class EqualizerTest {
                 .isInstanceOf(EquivalenceImpl.Builder.class);
     }
 
+    @Test
+    void hashBuilderShouldReturnHashImplBuilder() {
+        HashBuilder<String> builder = Equalizer.hashBuilder();
+
+        assertThat(builder)
+                .isInstanceOf(HashImpl.Builder.class);
+    }
+
 }

@@ -11,8 +11,7 @@ public final class Equalizer {
     }
 
     public static <T> HashBuilder<T> hashBuilder() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new HashImpl.Builder<>();
     }
 
     public static <T> EquivalenceAndHashBuilder<T> equivalenceAndHashBuilder(Class<T> targetClass) {
