@@ -6,17 +6,17 @@ public final class Equalizer {
         throw new UnsupportedOperationException();
     }
 
-    public static <T> Equivalence<T> equalsFor(Class<T> clazz) {
+    public static <T> EquivalenceBuilder<T> equalsFor(Class<T> clazz) {
         // TODO implement
         throw new UnsupportedOperationException();
     }
 
-    public static <T> Hash<T> hashCodeFor(Class<T> clazz) {
+    public static <T> HashBuilder<T> hashCodeFor(Class<T> clazz) {
         // TODO implement
         throw new UnsupportedOperationException();
     }
 
-    public static <T> EquivalenceAndHash<T> equalsAndHashCodeFor(Class<T> clazz) {
+    public static <T> EquivalenceAndHashBuilder<T> equalsAndHashCodeFor(Class<T> clazz) {
         // TODO implement
         throw new UnsupportedOperationException();
     }
