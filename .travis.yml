@@ -8,7 +8,7 @@ before_script:
   - sudo chmod a+x ./gradlew
 
 script:
-  - ./gradlew build -s
+  - ./gradlew clean build codacyCoverageReport -s
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
