@@ -25,6 +25,9 @@ val javadocJar by tasks.creating(Jar::class) {
 tasks {
     jacocoTestReport {
         dependsOn(test)
+        reports {
+            xml.isEnabled = true
+        }
     }
 }
 
