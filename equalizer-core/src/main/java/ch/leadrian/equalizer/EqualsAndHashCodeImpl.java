@@ -38,6 +38,7 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
 
         @Override
         public EqualsAndHashCodeBuilder<T> withSuper(EqualsAndHashCode<? super T> superEqualsAndHashCode) {
+            requireNonNull(superEqualsAndHashCode, "superEqualsAndHashCode must be null");
             equalsBuilder.withSuper(superEqualsAndHashCode);
             hashCodeBuilder.withSuper(superEqualsAndHashCode);
             return this;
@@ -45,24 +46,28 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
 
         @Override
         public EqualsAndHashCodeBuilder<T> compare(Function<? super T, ?> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compare(valueExtractor);
             return this;
         }
 
         @Override
         public EqualsAndHashCodeBuilder<T> compareDeep(Function<? super T, ?> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compareDeep(valueExtractor);
             return this;
         }
 
         @Override
         public EqualsAndHashCodeBuilder<T> compareIdentity(Function<? super T, ?> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compareIdentity(valueExtractor);
             return this;
         }
 
         @Override
         public EqualsAndHashCodeBuilder<T> compareAndHash(Function<? super T, ?> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compare(valueExtractor);
             hashCodeBuilder.hash(valueExtractor);
             return this;
@@ -70,6 +75,7 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
 
         @Override
         public EqualsAndHashCodeBuilder<T> compareAndHashDeep(Function<? super T, ?> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compareDeep(valueExtractor);
             hashCodeBuilder.hashDeep(valueExtractor);
             return this;
@@ -77,6 +83,7 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
 
         @Override
         public EqualsAndHashCodeBuilder<T> compareAndHashIdentity(Function<? super T, ?> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compareIdentity(valueExtractor);
             hashCodeBuilder.hashIdentity(valueExtractor);
             return this;
@@ -84,6 +91,7 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
 
         @Override
         public EqualsAndHashCodeBuilder<T> equalIf(BiPredicate<? super T, ? super T> condition) {
+            requireNonNull(condition, "condition must be null");
             equalsBuilder.equalIf(condition);
             return this;
         }
