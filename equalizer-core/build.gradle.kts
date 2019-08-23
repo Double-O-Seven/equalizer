@@ -1,6 +1,13 @@
 plugins {
     `maven-publish`
     signing
+    jacoco
+}
+
+val codacyCoverageReport: Configuration by configurations.creating
+
+dependencies {
+    codacyCoverageReport(group = "com.codacy", name = "codacy-coverage-reporter", version = "6.0.2")
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
@@ -13,6 +20,30 @@ val javadocJar by tasks.creating(Jar::class) {
     dependsOn(tasks.javadoc)
     archiveClassifier.set("javadoc")
     from(tasks.javadoc.get().destinationDir)
+}
+
+tasks {
+
+    jacocoTestReport {
+        dependsOn(test)
+    }
+}
+
+task<JavaExec>("codacyCoverageReport") {
+    dependsOn(tasks.jacocoTestReport)
+    main = "com.codacy.CodacyCoverageReporter"
+    classpath = codacyCoverageReport
+    args(
+            "report",
+            "-l",
+            "Java",
+            "-r",
+            "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
+    )
+}
+
+jacoco {
+    toolVersion = "0.8.4"
 }
 
 publishing {
