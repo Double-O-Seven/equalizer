@@ -6,11 +6,11 @@ import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
-final class HashImpl<T> implements Hash<T> {
+final class HashCodeImpl<T> implements HashCode<T> {
 
     private final List<HashStep<T>> hashSteps;
 
-    private HashImpl(List<? extends HashStep<T>> hashSteps) {
+    private HashCodeImpl(List<? extends HashStep<T>> hashSteps) {
         this.hashSteps = new ArrayList<>(hashSteps);
     }
 
@@ -31,42 +31,42 @@ final class HashImpl<T> implements Hash<T> {
         return result;
     }
 
-    static final class Builder<T> implements HashBuilder<T> {
+    static final class Builder<T> implements HashCodeBuilder<T> {
 
         private final List<HashStep<T>> hashSteps = new ArrayList<>();
 
         @Override
-        public HashBuilder<T> withSuper(Hash<? super T> superHash) {
-            requireNonNull(superHash, "superHash must not be null");
-            return addHashStep(new DelegatingHashStep<>(superHash::hashCode));
+        public HashCodeBuilder<T> withSuper(HashCode<? super T> superHashCode) {
+            requireNonNull(superHashCode, "superHashCode must not be null");
+            return addHashStep(new DelegatingHashStep<>(superHashCode::hashCode));
         }
 
         @Override
-        public HashBuilder<T> hash(Function<? super T, ?> valueExtractor) {
+        public HashCodeBuilder<T> hash(Function<? super T, ?> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new ShallowHashStep<>(valueExtractor));
         }
 
         @Override
-        public HashBuilder<T> hashDeep(Function<? super T, ?> valueExtractor) {
+        public HashCodeBuilder<T> hashDeep(Function<? super T, ?> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new DeepHashStep<>(valueExtractor));
         }
 
         @Override
-        public HashBuilder<T> hashIdentity(Function<? super T, ?> valueExtractor) {
+        public HashCodeBuilder<T> hashIdentity(Function<? super T, ?> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new IdentityHashStep<>(valueExtractor));
         }
 
-        private HashBuilder<T> addHashStep(HashStep<T> step) {
+        private HashCodeBuilder<T> addHashStep(HashStep<T> step) {
             hashSteps.add(step);
             return this;
         }
 
         @Override
-        public Hash<T> build() {
-            return new HashImpl<>(hashSteps);
+        public HashCode<T> build() {
+            return new HashCodeImpl<>(hashSteps);
         }
     }
 }

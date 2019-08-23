@@ -1,6 +1,6 @@
 package ch.leadrian.equalizer;
 
-public interface Hash<T> {
+public interface HashCode<T> {
 
     int hashCode(T object);
 

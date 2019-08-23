@@ -1,6 +1,6 @@
 package ch.leadrian.equalizer;
 
-public interface Equivalence<T> {
+public interface Equals<T> {
 
     boolean equals(T object, Object otherObject);
 

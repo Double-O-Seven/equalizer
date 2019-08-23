@@ -6,15 +6,15 @@ public final class Equalizer {
         throw new UnsupportedOperationException();
     }
 
-    public static <T> EquivalenceBuilder<T> equalsBuilder(Class<T> targetClass) {
-        return new EquivalenceImpl.Builder<>(targetClass);
+    public static <T> EqualsBuilder<T> equalsBuilder(Class<T> targetClass) {
+        return new EqualsImpl.Builder<>(targetClass);
     }
 
-    public static <T> HashBuilder<T> hashCodeBuilder() {
-        return new HashImpl.Builder<>();
+    public static <T> HashCodeBuilder<T> hashCodeBuilder() {
+        return new HashCodeImpl.Builder<>();
     }
 
-    public static <T> EquivalenceAndHashBuilder<T> equalsAndHashCodeBuilder(Class<T> targetClass) {
-        return new EquivalenceAndHashImpl.Builder<>(targetClass);
+    public static <T> EqualsAndHashCodeBuilder<T> equalsAndHashCodeBuilder(Class<T> targetClass) {
+        return new EqualsAndHashCodeImpl.Builder<>(targetClass);
     }
 }

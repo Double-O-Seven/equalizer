@@ -6,22 +6,22 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HashImplTest {
+class HashCodeImplTest {
 
     @Test
     void builderShouldBuildHashImpl() {
-        Hash<String> hash = new HashImpl.Builder<String>().build();
+        HashCode<String> hashCode = new HashCodeImpl.Builder<String>().build();
 
-        assertThat(hash)
-                .isInstanceOf(HashImpl.class);
+        assertThat(hashCode)
+                .isInstanceOf(HashCodeImpl.class);
     }
 
 
     @Test
     void givenValueIsNullItShouldReturnZero() {
-        Hash<TestData> hash = new HashImpl.Builder<TestData>().build();
+        HashCode<TestData> hashCode = new HashCodeImpl.Builder<TestData>().build();
 
-        int result = hash.hashCode(null);
+        int result = hashCode.hashCode(null);
 
         assertThat(result)
                 .isZero();
@@ -30,9 +30,9 @@ class HashImplTest {
     @Test
     void givenNoHashStepsItShouldReturnSystemIdentityHashCode() {
         TestData testData = new TestData("foo", new Object[0], 1337);
-        Hash<TestData> hash = new HashImpl.Builder<TestData>().build();
+        HashCode<TestData> hashCode = new HashCodeImpl.Builder<TestData>().build();
 
-        int result = hash.hashCode(testData);
+        int result = hashCode.hashCode(testData);
 
         assertThat(result)
                 .isEqualTo(System.identityHashCode(testData));
@@ -44,14 +44,14 @@ class HashImplTest {
         Object[] arrayValue = new Object[]{"test"};
         int intValue = 1337;
         TestData testData = new TestData(stringValue, arrayValue, intValue);
-        Hash<TestData> hash = new HashImpl.Builder<TestData>()
-                .withSuper(new HashImpl.Builder<BaseTestData>().hash(BaseTestData::getIntValue).build())
+        HashCode<TestData> hashCode = new HashCodeImpl.Builder<TestData>()
+                .withSuper(new HashCodeImpl.Builder<BaseTestData>().hash(BaseTestData::getIntValue).build())
                 .hash(TestData::getStringValue)
                 .hashDeep(TestData::getArrayValue)
                 .hashIdentity(TestData::getStringValue)
                 .build();
 
-        int result = hash.hashCode(testData);
+        int result = hashCode.hashCode(testData);
 
         assertThat(result)
                 .isEqualTo(31 *

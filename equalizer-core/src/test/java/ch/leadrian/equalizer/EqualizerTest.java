@@ -7,27 +7,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EqualizerTest {
 
     @Test
-    void equalsBuilderShouldReturnEquivalenceImplBuilder() {
-        EquivalenceBuilder<String> builder = Equalizer.equalsBuilder(String.class);
+    void equalsBuilderShouldReturnEqualsImplBuilder() {
+        EqualsBuilder<String> builder = Equalizer.equalsBuilder(String.class);
 
         assertThat(builder)
-                .isInstanceOf(EquivalenceImpl.Builder.class);
+                .isInstanceOf(EqualsImpl.Builder.class);
     }
 
     @Test
     void hashCodeBuilderShouldReturnHashImplBuilder() {
-        HashBuilder<String> builder = Equalizer.hashCodeBuilder();
+        HashCodeBuilder<String> builder = Equalizer.hashCodeBuilder();
 
         assertThat(builder)
-                .isInstanceOf(HashImpl.Builder.class);
+                .isInstanceOf(HashCodeImpl.Builder.class);
     }
 
     @Test
-    void equalsAndHashCodeBuilderShouldReturnEquivalenceAndHashImplBuilder() {
-        EquivalenceAndHashBuilder<String> builder = Equalizer.equalsAndHashCodeBuilder(String.class);
+    void equalsAndHashCodeBuilderShouldReturnEqualsAndHashCodeImplBuilder() {
+        EqualsAndHashCodeBuilder<String> builder = Equalizer.equalsAndHashCodeBuilder(String.class);
 
         assertThat(builder)
-                .isInstanceOf(EquivalenceAndHashImpl.Builder.class);
+                .isInstanceOf(EqualsAndHashCodeImpl.Builder.class);
     }
 
 }
