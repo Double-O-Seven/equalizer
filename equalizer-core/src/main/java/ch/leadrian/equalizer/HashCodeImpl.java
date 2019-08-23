@@ -3,6 +3,10 @@ package ch.leadrian.equalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import static java.util.Objects.requireNonNull;
 
@@ -45,6 +49,30 @@ final class HashCodeImpl<T> implements HashCode<T> {
         public HashCodeBuilder<T> hash(Function<? super T, ?> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new ShallowHashStep<>(valueExtractor));
+        }
+
+        @Override
+        public HashCodeBuilder<T> hash(ToIntFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new IntHashStep<>(valueExtractor));
+        }
+
+        @Override
+        public HashCodeBuilder<T> hash(ToLongFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new LongHashStep<>(valueExtractor));
+        }
+
+        @Override
+        public HashCodeBuilder<T> hash(ToDoubleFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new DoubleHashStep<>(valueExtractor));
+        }
+
+        @Override
+        public HashCodeBuilder<T> hash(Predicate<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new BooleanHashStep<>(valueExtractor));
         }
 
         @Override

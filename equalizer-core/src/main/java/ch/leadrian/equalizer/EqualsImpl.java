@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import static java.util.Objects.requireNonNull;
 
@@ -68,6 +72,30 @@ final class EqualsImpl<T> implements Equals<T> {
         public EqualsBuilder<T> compare(Function<? super T, ?> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addComparisonStep(new ShallowComparisonStep<>(valueExtractor));
+        }
+
+        @Override
+        public EqualsBuilder<T> compare(ToIntFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new IntComparisonStep<>(valueExtractor));
+        }
+
+        @Override
+        public EqualsBuilder<T> compare(ToLongFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new LongComparisonStep<>(valueExtractor));
+        }
+
+        @Override
+        public EqualsBuilder<T> compare(ToDoubleFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new DoubleComparisonStep<>(valueExtractor));
+        }
+
+        @Override
+        public EqualsBuilder<T> compare(Predicate<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new BooleanComparisonStep<>(valueExtractor));
         }
 
         @Override

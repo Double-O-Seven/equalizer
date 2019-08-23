@@ -2,6 +2,10 @@ package ch.leadrian.equalizer;
 
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import static java.util.Objects.requireNonNull;
 
@@ -52,6 +56,34 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
         }
 
         @Override
+        public EqualsAndHashCodeBuilder<T> compare(ToIntFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            return this;
+        }
+
+        @Override
+        public EqualsAndHashCodeBuilder<T> compare(ToLongFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            return this;
+        }
+
+        @Override
+        public EqualsAndHashCodeBuilder<T> compare(ToDoubleFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            return this;
+        }
+
+        @Override
+        public EqualsAndHashCodeBuilder<T> compare(Predicate<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            return this;
+        }
+
+        @Override
         public EqualsAndHashCodeBuilder<T> compareDeep(Function<? super T, ?> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compareDeep(valueExtractor);
@@ -67,6 +99,38 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
 
         @Override
         public EqualsAndHashCodeBuilder<T> compareAndHash(Function<? super T, ?> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            hashCodeBuilder.hash(valueExtractor);
+            return this;
+        }
+
+        @Override
+        public EqualsAndHashCodeBuilder<T> compareAndHash(ToIntFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            hashCodeBuilder.hash(valueExtractor);
+            return this;
+        }
+
+        @Override
+        public EqualsAndHashCodeBuilder<T> compareAndHash(ToLongFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            hashCodeBuilder.hash(valueExtractor);
+            return this;
+        }
+
+        @Override
+        public EqualsAndHashCodeBuilder<T> compareAndHash(ToDoubleFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must be null");
+            equalsBuilder.compare(valueExtractor);
+            hashCodeBuilder.hash(valueExtractor);
+            return this;
+        }
+
+        @Override
+        public EqualsAndHashCodeBuilder<T> compareAndHash(Predicate<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compare(valueExtractor);
             hashCodeBuilder.hash(valueExtractor);
