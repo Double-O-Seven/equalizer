@@ -35,6 +35,7 @@ class DeepHashStepTest {
                     new DeepHashArguments<>("test", Object::hashCode),
                     new DeepHashArguments<>(new Object[]{"foo", "bar"}, Arrays::deepHashCode),
                     new DeepHashArguments<>(new byte[]{1, 2}, Arrays::hashCode),
+                    new DeepHashArguments<>(new short[]{1, 2}, Arrays::hashCode),
                     new DeepHashArguments<>(new int[]{3, 4}, Arrays::hashCode),
                     new DeepHashArguments<>(new long[]{5L, 6L}, Arrays::hashCode),
                     new DeepHashArguments<>(new char[]{'a', 'b'}, Arrays::hashCode),
