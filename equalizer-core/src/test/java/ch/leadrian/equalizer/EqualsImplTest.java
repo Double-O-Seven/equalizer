@@ -1,34 +1,76 @@
 package ch.leadrian.equalizer;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EqualsImplTest {
 
+    private static Object OBJECT = new Object();
+
+    private Equals<TestObject> equals;
+
+    @BeforeEach
+    void setUp() {
+        Equals<TestObjectBase> superEquals = new EqualsImpl.Builder<>(TestObjectBase.class)
+                .compare(TestObjectBase::getBaseObjectValue)
+                .build();
+        equals = new EqualsImpl.Builder<>(TestObject.class)
+                .withSuper(superEquals)
+                .compare(TestObject::getStringValue)
+                .compareIdentity(TestObject::getObjectValue)
+                .compareDeep(TestObject::getArrayValue)
+                .compare(TestObject::getIntValue)
+                .compare(TestObject::getLongValue)
+                .compare(TestObject::getDoubleValue)
+                .compare(TestObject::getBooleanValue)
+                .build();
+    }
+
     @Test
     void builderShouldBuildEqualsImpl() {
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class).build();
-
         assertThat(equals)
                 .isInstanceOf(EqualsImpl.class);
     }
 
     @Test
     void givenValuesAreTheSameItShouldReturnTrue() {
-        TestData testData = new TestData("test", 1, new Object[0], "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class).build();
+        TestObject testObject = testObject();
 
-        boolean result = equals.equals(testData, testData);
+        boolean result = equals.equals(testObject, testObject);
 
         assertThat(result)
                 .isTrue();
     }
 
     @Test
-    void givenBothValuesAreNullItShouldReturnTrue() {
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class).build();
+    void givenValuesAreTheSameAndNoComparisonsItShouldReturnTrue() {
+        TestObject testObject = testObject();
+        Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
 
+        boolean result = equals.equals(testObject, testObject);
+
+        assertThat(result)
+                .isTrue();
+    }
+
+    @Test
+    void givenValuesAreNotTheSameAndNoComparisonsItShouldReturnFalse() {
+        TestObject testObject1 = testObject();
+        TestObject testObject2 = testObject();
+        Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
+
+        boolean result = equals.equals(testObject1, testObject2);
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @Test
+    void givenBothValuesAreNullItShouldReturnTrue() {
         boolean result = equals.equals(null, null);
 
         assertThat(result)
@@ -36,34 +78,20 @@ class EqualsImplTest {
     }
 
     @Test
-    void givenFirstValueIsNullItShouldReturnFalse() {
-        TestData testData = new TestData("test", 1, new Object[0], "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class).build();
+    void givenOnlyFirstValueIsNullItShouldReturnFalse() {
+        TestObject testObject = testObject();
 
-        boolean result = equals.equals(null, testData);
-
-        assertThat(result)
-                .isFalse();
-    }
-
-    @Test
-    void givenSecondValueIsNullItShouldReturnFalse() {
-        TestData testData = new TestData("test", 1, new Object[0], "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class).build();
-
-        boolean result = equals.equals(testData, null);
+        boolean result = equals.equals(null, testObject);
 
         assertThat(result)
                 .isFalse();
     }
 
     @Test
-    void givenDifferentValuesWithNoComparisonsItShouldReturnFalse() {
-        TestData testData1 = new TestData("test", 1, new Object[0], "base");
-        TestData testData2 = new TestData("test", 1, new Object[0], "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class).build();
+    void givenOnlySecondValueIsNullItShouldReturnFalse() {
+        TestObject testObject = testObject();
 
-        boolean result = equals.equals(testData1, testData2);
+        boolean result = equals.equals(testObject, null);
 
         assertThat(result)
                 .isFalse();
@@ -71,37 +99,21 @@ class EqualsImplTest {
 
     @Test
     void givenAllComparisonsSucceedingItShouldReturnTrue() {
-        String stringValue = "test";
-        TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-        TestData testData2 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class)
-                .withSuper(new EqualsImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                .compareIdentity(TestData::getStringValue)
-                .compare(TestData::getIntValue)
-                .compareDeep(TestData::getArrayValue)
-                .equalIf((value1, value2) -> true)
-                .build();
+        TestObject testObject1 = testObject();
+        TestObject testObject2 = testObject();
 
-        boolean result = equals.equals(testData1, testData2);
+        boolean result = equals.equals(testObject1, testObject2);
 
         assertThat(result)
                 .isTrue();
     }
 
-    @SuppressWarnings("StringOperationCanBeSimplified")
     @Test
     void givenIdentityComparisonFailsItShouldReturnFalse() {
-        TestData testData1 = new TestData("test", 65536, new Object[]{"bla"}, "base");
-        TestData testData2 = new TestData(new String("test"), 65536, new Object[]{"bla"}, "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class)
-                .withSuper(new EqualsImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                .compareIdentity(TestData::getStringValue)
-                .compare(TestData::getIntValue)
-                .compareDeep(TestData::getArrayValue)
-                .equalIf((value1, value2) -> true)
-                .build();
+        TestObject testObject1 = testObject().withObjectValue(new Object());
+        TestObject testObject2 = testObject().withObjectValue(new Object());
 
-        boolean result = equals.equals(testData1, testData2);
+        boolean result = equals.equals(testObject1, testObject2);
 
         assertThat(result)
                 .isFalse();
@@ -109,18 +121,58 @@ class EqualsImplTest {
 
     @Test
     void givenShallowComparisonFailsItShouldReturnFalse() {
-        String stringValue = "test";
-        TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-        TestData testData2 = new TestData(stringValue, 1234, new Object[]{"bla"}, "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class)
-                .withSuper(new EqualsImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                .compareIdentity(TestData::getStringValue)
-                .compare(TestData::getIntValue)
-                .compareDeep(TestData::getArrayValue)
-                .equalIf((value1, value2) -> true)
-                .build();
+        TestObject testObject1 = testObject().withStringValue("foo");
+        TestObject testObject2 = testObject().withStringValue("bar");
 
-        boolean result = equals.equals(testData1, testData2);
+        boolean result = equals.equals(testObject1, testObject2);
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @Test
+    void givenIntComparisonFailsItShouldReturnFalse() {
+        TestObject testObject1 = testObject().withIntValue(1234);
+        TestObject testObject2 = testObject().withIntValue(5678);
+
+        boolean result = equals.equals(testObject1, testObject2);
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @Test
+    void givenLongComparisonFailsItShouldReturnFalse() {
+        TestObject testObject1 = testObject().withLongValue(1234L);
+        TestObject testObject2 = testObject().withLongValue(5678L);
+
+        boolean result = equals.equals(testObject1, testObject2);
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @Test
+    void givenDoubleComparisonFailsItShouldReturnFalse() {
+        TestObject testObject1 = testObject().withDoubleValue(1234.0);
+        TestObject testObject2 = testObject().withDoubleValue(5678.0);
+
+        boolean result = equals.equals(testObject1, testObject2);
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "true, false",
+            "false, true"
+    })
+    void givenBooleanComparisonFailsItShouldReturnFalse(boolean booleanValue1, boolean booleanValue2) {
+        TestObject testObject1 = testObject().withBooleanValue(booleanValue1);
+        TestObject testObject2 = testObject().withBooleanValue(booleanValue2);
+
+        boolean result = equals.equals(testObject1, testObject2);
 
         assertThat(result)
                 .isFalse();
@@ -128,18 +180,10 @@ class EqualsImplTest {
 
     @Test
     void givenDeepComparisonFailsItShouldReturnFalse() {
-        String stringValue = "test";
-        TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-        TestData testData2 = new TestData(stringValue, 65536, new Object[]{"blub"}, "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class)
-                .withSuper(new EqualsImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                .compareIdentity(TestData::getStringValue)
-                .compare(TestData::getIntValue)
-                .compareDeep(TestData::getArrayValue)
-                .equalIf((value1, value2) -> true)
-                .build();
+        TestObject testObject1 = testObject().withArrayValue("foo", "bar");
+        TestObject testObject2 = testObject().withArrayValue("bla");
 
-        boolean result = equals.equals(testData1, testData2);
+        boolean result = equals.equals(testObject1, testObject2);
 
         assertThat(result)
                 .isFalse();
@@ -147,18 +191,14 @@ class EqualsImplTest {
 
     @Test
     void givenDelegatingComparisonFailsItShouldReturnFalse() {
-        String stringValue = "test";
-        TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-        TestData testData2 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class)
-                .withSuper(new EqualsImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                .compareIdentity(TestData::getStringValue)
-                .compare(TestData::getIntValue)
-                .compareDeep(TestData::getArrayValue)
+        TestObject testObject1 = testObject();
+        TestObject testObject2 = testObject();
+        Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class)
+                .compare(TestObject::getStringValue)
                 .equalIf((value1, value2) -> false)
                 .build();
 
-        boolean result = equals.equals(testData1, testData2);
+        boolean result = equals.equals(testObject1, testObject2);
 
         assertThat(result)
                 .isFalse();
@@ -166,61 +206,28 @@ class EqualsImplTest {
 
     @Test
     void givenSuperComparisonFailsItShouldReturnFalse() {
-        String stringValue = "test";
-        TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-        TestData testData2 = new TestData(stringValue, 65536, new Object[]{"bla"}, "haha");
-        Equals<TestData> equals = new EqualsImpl.Builder<>(TestData.class)
-                .withSuper(new EqualsImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                .compareIdentity(TestData::getStringValue)
-                .compare(TestData::getIntValue)
-                .compareDeep(TestData::getArrayValue)
-                .equalIf((value1, value2) -> true)
-                .build();
+        TestObject testObject1 = testObject().withBaseObjectValue("foo");
+        TestObject testObject2 = testObject().withBaseObjectValue("bar");
 
-        boolean result = equals.equals(testData1, testData2);
+        boolean result = equals.equals(testObject1, testObject2);
 
         assertThat(result)
                 .isFalse();
     }
 
-    private static class BaseTestData {
-
-        private final String superStringValue;
-
-        BaseTestData(String superStringValue) {
-            this.superStringValue = superStringValue;
-        }
-
-        String getSuperStringValue() {
-            return superStringValue;
-        }
-
-    }
-
-    private static class TestData extends BaseTestData {
-
-        private final String stringValue;
-        private final int intValue;
-        private final Object[] arrayValue;
-
-        TestData(String stringValue, int intValue, Object[] arrayValue, String baseStringValue) {
-            super(baseStringValue);
-            this.stringValue = stringValue;
-            this.intValue = intValue;
-            this.arrayValue = arrayValue;
-        }
-
-        String getStringValue() {
-            return stringValue;
-        }
-
-        int getIntValue() {
-            return intValue;
-        }
-
-        Object[] getArrayValue() {
-            return arrayValue;
-        }
+    @SuppressWarnings("StringOperationCanBeSimplified")
+    private static ImmutableTestObject testObject() {
+        return ImmutableTestObject
+                .builder()
+                .baseObjectValue("Base")
+                .stringValue(new String("Test"))
+                .objectValue(OBJECT)
+                .arrayValue("foo", "bar")
+                .intValue(1337)
+                .longValue(1234L)
+                .doubleValue(0.815)
+                .booleanValue(true)
+                .build();
     }
 
 }

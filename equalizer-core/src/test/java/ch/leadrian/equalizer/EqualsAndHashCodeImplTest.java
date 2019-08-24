@@ -1,7 +1,11 @@
 package ch.leadrian.equalizer;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
@@ -10,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 class EqualsAndHashCodeImplTest {
 
+    private static Object OBJECT = new Object();
+
     @Test
     void builderShouldBuildEqualsAndHashCodeImpl() {
-        EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+        EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class).build();
 
         assertThat(equalsAndHashCode)
                 .isInstanceOf(EqualsAndHashCodeImpl.class);
@@ -21,177 +27,414 @@ class EqualsAndHashCodeImplTest {
     @Nested
     class EqualsTests {
 
-        @Test
-        void givenValuesAreTheSameItShouldReturnTrue() {
-            TestData testData = new TestData("test", 1, new Object[0], "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+        @Nested
+        class CompareAndHashTests {
 
-            boolean result = equalsAndHashCode.equals(testData, testData);
+            private EqualsAndHashCode<TestObject> equalsAndHashCode;
 
-            assertThat(result)
-                    .isTrue();
+            @BeforeEach
+            void setUp() {
+                EqualsAndHashCode<TestObjectBase> superEqualsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObjectBase.class)
+                        .compareAndHash(TestObjectBase::getBaseObjectValue)
+                        .build();
+                equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                        .withSuper(superEqualsAndHashCode)
+                        .compareAndHash(TestObject::getStringValue)
+                        .compareAndHashIdentity(TestObject::getObjectValue)
+                        .compareAndHashDeep(TestObject::getArrayValue)
+                        .compareAndHash(TestObject::getIntValue)
+                        .compareAndHash(TestObject::getLongValue)
+                        .compareAndHash(TestObject::getDoubleValue)
+                        .compareAndHash(TestObject::getBooleanValue)
+                        .build();
+            }
+
+            @Test
+            void givenValuesAreTheSameItShouldReturnTrue() {
+                TestObject testObject = testObject();
+
+                boolean result = equalsAndHashCode.equals(testObject, testObject);
+
+                assertThat(result)
+                        .isTrue();
+            }
+
+            @Test
+            void givenValuesAreTheSameAndNoComparisonsItShouldReturnTrue() {
+                TestObject testObject = testObject();
+                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
+
+                boolean result = equals.equals(testObject, testObject);
+
+                assertThat(result)
+                        .isTrue();
+            }
+
+            @Test
+            void givenValuesAreNotTheSameAndNoComparisonsItShouldReturnFalse() {
+                TestObject testObject1 = testObject();
+                TestObject testObject2 = testObject();
+                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
+
+                boolean result = equals.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenBothValuesAreNullItShouldReturnTrue() {
+                boolean result = equalsAndHashCode.equals(null, null);
+
+                assertThat(result)
+                        .isTrue();
+            }
+
+            @Test
+            void givenOnlyFirstValueIsNullItShouldReturnFalse() {
+                TestObject testObject = testObject();
+
+                boolean result = equalsAndHashCode.equals(null, testObject);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenOnlySecondValueIsNullItShouldReturnFalse() {
+                TestObject testObject = testObject();
+
+                boolean result = equalsAndHashCode.equals(testObject, null);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenAllComparisonsSucceedingItShouldReturnTrueAndHaveSameHashCode() {
+                TestObject testObject1 = testObject();
+                TestObject testObject2 = testObject();
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+                int hashCode1 = equalsAndHashCode.hashCode(testObject1);
+                int hashCode2 = equalsAndHashCode.hashCode(testObject2);
+
+                assertAll(
+                        () -> assertThat(result).isTrue(),
+                        () -> assertThat(hashCode1).isEqualTo(hashCode2)
+                );
+            }
+
+            @Test
+            void givenIdentityComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withObjectValue(new Object());
+                TestObject testObject2 = testObject().withObjectValue(new Object());
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenShallowComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withStringValue("foo");
+                TestObject testObject2 = testObject().withStringValue("bar");
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenIntComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withIntValue(1234);
+                TestObject testObject2 = testObject().withIntValue(5678);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenLongComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withLongValue(1234L);
+                TestObject testObject2 = testObject().withLongValue(5678L);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenDoubleComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withDoubleValue(1234.0);
+                TestObject testObject2 = testObject().withDoubleValue(5678.0);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @ParameterizedTest
+            @CsvSource({
+                    "true, false",
+                    "false, true"
+            })
+            void givenBooleanComparisonFailsItShouldReturnFalse(boolean booleanValue1, boolean booleanValue2) {
+                TestObject testObject1 = testObject().withBooleanValue(booleanValue1);
+                TestObject testObject2 = testObject().withBooleanValue(booleanValue2);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenDeepComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withArrayValue("foo", "bar");
+                TestObject testObject2 = testObject().withArrayValue("bla");
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenDelegatingComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject();
+                TestObject testObject2 = testObject();
+                EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                        .compare(TestObject::getStringValue)
+                        .equalIf((value1, value2) -> false)
+                        .build();
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenSuperComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withBaseObjectValue("foo");
+                TestObject testObject2 = testObject().withBaseObjectValue("bar");
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
         }
 
-        @Test
-        void givenBothValuesAreNullItShouldReturnTrue() {
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+        @Nested
+        class CompareTests {
 
-            boolean result = equalsAndHashCode.equals(null, null);
+            private EqualsAndHashCode<TestObject> equalsAndHashCode;
 
-            assertThat(result)
-                    .isTrue();
-        }
+            @BeforeEach
+            void setUp() {
+                EqualsAndHashCode<TestObjectBase> superEqualsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObjectBase.class)
+                        .compareAndHash(TestObjectBase::getBaseObjectValue)
+                        .build();
+                equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                        .withSuper(superEqualsAndHashCode)
+                        .compare(TestObject::getStringValue)
+                        .compareIdentity(TestObject::getObjectValue)
+                        .compareDeep(TestObject::getArrayValue)
+                        .compare(TestObject::getIntValue)
+                        .compare(TestObject::getLongValue)
+                        .compare(TestObject::getDoubleValue)
+                        .compare(TestObject::getBooleanValue)
+                        .build();
+            }
 
-        @Test
-        void givenFirstValueIsNullItShouldReturnFalse() {
-            TestData testData = new TestData("test", 1, new Object[0], "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+            @Test
+            void givenValuesAreTheSameItShouldReturnTrue() {
+                TestObject testObject = testObject();
 
-            boolean result = equalsAndHashCode.equals(null, testData);
+                boolean result = equalsAndHashCode.equals(testObject, testObject);
 
-            assertThat(result)
-                    .isFalse();
-        }
+                assertThat(result)
+                        .isTrue();
+            }
 
-        @Test
-        void givenSecondValueIsNullItShouldReturnFalse() {
-            TestData testData = new TestData("test", 1, new Object[0], "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+            @Test
+            void givenValuesAreTheSameAndNoComparisonsItShouldReturnTrue() {
+                TestObject testObject = testObject();
+                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
 
-            boolean result = equalsAndHashCode.equals(testData, null);
+                boolean result = equals.equals(testObject, testObject);
 
-            assertThat(result)
-                    .isFalse();
-        }
+                assertThat(result)
+                        .isTrue();
+            }
 
-        @Test
-        void givenDifferentValuesWithNoComparisonsItShouldReturnFalse() {
-            TestData testData1 = new TestData("test", 1, new Object[0], "base");
-            TestData testData2 = new TestData("test", 1, new Object[0], "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+            @Test
+            void givenValuesAreNotTheSameAndNoComparisonsItShouldReturnFalse() {
+                TestObject testObject1 = testObject();
+                TestObject testObject2 = testObject();
+                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
 
-            boolean result = equalsAndHashCode.equals(testData1, testData2);
+                boolean result = equals.equals(testObject1, testObject2);
 
-            assertThat(result)
-                    .isFalse();
-        }
+                assertThat(result)
+                        .isFalse();
+            }
 
-        @Test
-        void givenAllComparisonsSucceedingItShouldReturnTrueAndHashCodesShouldBeTheSame() {
-            String stringValue = "test";
-            TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-            TestData testData2 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class)
-                    .withSuper(new EqualsAndHashCodeImpl.Builder<>(BaseTestData.class).compareAndHash(BaseTestData::getSuperStringValue).build())
-                    .compareAndHashIdentity(TestData::getStringValue)
-                    .compareAndHash(TestData::getIntValue)
-                    .compareAndHashDeep(TestData::getArrayValue)
-                    .equalIf((value1, value2) -> true)
-                    .build();
+            @Test
+            void givenBothValuesAreNullItShouldReturnTrue() {
+                boolean result = equalsAndHashCode.equals(null, null);
 
-            boolean result = equalsAndHashCode.equals(testData1, testData2);
-            int hashCode1 = equalsAndHashCode.hashCode(testData1);
-            int hashCode2 = equalsAndHashCode.hashCode(testData2);
+                assertThat(result)
+                        .isTrue();
+            }
 
-            assertAll(
-                    () -> assertThat(result).isTrue(),
-                    () -> assertThat(hashCode1).isEqualTo(hashCode2)
-            );
-        }
+            @Test
+            void givenOnlyFirstValueIsNullItShouldReturnFalse() {
+                TestObject testObject = testObject();
 
-        @SuppressWarnings("StringOperationCanBeSimplified")
-        @Test
-        void givenIdentityComparisonFailsItShouldReturnFalse() {
-            TestData testData1 = new TestData("test", 65536, new Object[]{"bla"}, "base");
-            TestData testData2 = new TestData(new String("test"), 65536, new Object[]{"bla"}, "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class)
-                    .withSuper(new EqualsAndHashCodeImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                    .compareIdentity(TestData::getStringValue)
-                    .compare(TestData::getIntValue)
-                    .compareDeep(TestData::getArrayValue)
-                    .equalIf((value1, value2) -> true)
-                    .build();
+                boolean result = equalsAndHashCode.equals(null, testObject);
 
-            boolean result = equalsAndHashCode.equals(testData1, testData2);
+                assertThat(result)
+                        .isFalse();
+            }
 
-            assertThat(result)
-                    .isFalse();
-        }
+            @Test
+            void givenOnlySecondValueIsNullItShouldReturnFalse() {
+                TestObject testObject = testObject();
 
-        @Test
-        void givenShallowComparisonFailsItShouldReturnFalse() {
-            String stringValue = "test";
-            TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-            TestData testData2 = new TestData(stringValue, 1234, new Object[]{"bla"}, "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class)
-                    .withSuper(new EqualsAndHashCodeImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                    .compareIdentity(TestData::getStringValue)
-                    .compare(TestData::getIntValue)
-                    .compareDeep(TestData::getArrayValue)
-                    .equalIf((value1, value2) -> true)
-                    .build();
+                boolean result = equalsAndHashCode.equals(testObject, null);
 
-            boolean result = equalsAndHashCode.equals(testData1, testData2);
+                assertThat(result)
+                        .isFalse();
+            }
 
-            assertThat(result)
-                    .isFalse();
-        }
+            @Test
+            void givenAllComparisonsSucceedingItShouldReturnTrue() {
+                TestObject testObject1 = testObject();
+                TestObject testObject2 = testObject();
 
-        @Test
-        void givenDeepComparisonFailsItShouldReturnFalse() {
-            String stringValue = "test";
-            TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-            TestData testData2 = new TestData(stringValue, 65536, new Object[]{"blub"}, "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class)
-                    .withSuper(new EqualsAndHashCodeImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                    .compareIdentity(TestData::getStringValue)
-                    .compare(TestData::getIntValue)
-                    .compareDeep(TestData::getArrayValue)
-                    .equalIf((value1, value2) -> true)
-                    .build();
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
 
-            boolean result = equalsAndHashCode.equals(testData1, testData2);
+                assertThat(result)
+                        .isTrue();
+            }
 
-            assertThat(result)
-                    .isFalse();
-        }
+            @Test
+            void givenIdentityComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withObjectValue(new Object());
+                TestObject testObject2 = testObject().withObjectValue(new Object());
 
-        @Test
-        void givenDelegatingComparisonFailsItShouldReturnFalse() {
-            String stringValue = "test";
-            TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-            TestData testData2 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class)
-                    .withSuper(new EqualsAndHashCodeImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                    .compareIdentity(TestData::getStringValue)
-                    .compare(TestData::getIntValue)
-                    .compareDeep(TestData::getArrayValue)
-                    .equalIf((value1, value2) -> false)
-                    .build();
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
 
-            boolean result = equalsAndHashCode.equals(testData1, testData2);
+                assertThat(result)
+                        .isFalse();
+            }
 
-            assertThat(result)
-                    .isFalse();
-        }
+            @Test
+            void givenShallowComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withStringValue("foo");
+                TestObject testObject2 = testObject().withStringValue("bar");
 
-        @Test
-        void givenSuperComparisonFailsItShouldReturnFalse() {
-            String stringValue = "test";
-            TestData testData1 = new TestData(stringValue, 65536, new Object[]{"bla"}, "base");
-            TestData testData2 = new TestData(stringValue, 65536, new Object[]{"bla"}, "haha");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class)
-                    .withSuper(new EqualsAndHashCodeImpl.Builder<>(BaseTestData.class).compare(BaseTestData::getSuperStringValue).build())
-                    .compareIdentity(TestData::getStringValue)
-                    .compare(TestData::getIntValue)
-                    .compareDeep(TestData::getArrayValue)
-                    .equalIf((value1, value2) -> true)
-                    .build();
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
 
-            boolean result = equalsAndHashCode.equals(testData1, testData2);
+                assertThat(result)
+                        .isFalse();
+            }
 
-            assertThat(result)
-                    .isFalse();
+            @Test
+            void givenIntComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withIntValue(1234);
+                TestObject testObject2 = testObject().withIntValue(5678);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenLongComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withLongValue(1234L);
+                TestObject testObject2 = testObject().withLongValue(5678L);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenDoubleComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withDoubleValue(1234.0);
+                TestObject testObject2 = testObject().withDoubleValue(5678.0);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @ParameterizedTest
+            @CsvSource({
+                    "true, false",
+                    "false, true"
+            })
+            void givenBooleanComparisonFailsItShouldReturnFalse(boolean booleanValue1, boolean booleanValue2) {
+                TestObject testObject1 = testObject().withBooleanValue(booleanValue1);
+                TestObject testObject2 = testObject().withBooleanValue(booleanValue2);
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenDeepComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withArrayValue("foo", "bar");
+                TestObject testObject2 = testObject().withArrayValue("bla");
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenDelegatingComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject();
+                TestObject testObject2 = testObject();
+                EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                        .compare(TestObject::getStringValue)
+                        .equalIf((value1, value2) -> false)
+                        .build();
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
+            @Test
+            void givenSuperComparisonFailsItShouldReturnFalse() {
+                TestObject testObject1 = testObject().withBaseObjectValue("foo");
+                TestObject testObject2 = testObject().withBaseObjectValue("bar");
+
+                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+                assertThat(result)
+                        .isFalse();
+            }
+
         }
 
     }
@@ -201,7 +444,7 @@ class EqualsAndHashCodeImplTest {
 
         @Test
         void givenValueIsNullItShouldReturnZero() {
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class).build();
 
             int result = equalsAndHashCode.hashCode(null);
 
@@ -211,82 +454,145 @@ class EqualsAndHashCodeImplTest {
 
         @Test
         void givenNoHashStepsItShouldReturnSystemIdentityHashCode() {
-            TestData testData = new TestData("foo", 1337, new Object[0], "bar");
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class).build();
+            TestObject testObject = testObject();
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class).build();
 
-            int result = equalsAndHashCode.hashCode(testData);
+            int result = equalsAndHashCode.hashCode(testObject);
 
             assertThat(result)
-                    .isEqualTo(System.identityHashCode(testData));
+                    .isEqualTo(System.identityHashCode(testObject));
         }
 
         @Test
-        void shouldComputeHash() {
-            String stringValue = "foo";
-            Object[] arrayValue = new Object[]{"test"};
-            int intValue = 1337;
-            String baseStringValue = "bar";
-            TestData testData = new TestData(stringValue, intValue, arrayValue, baseStringValue);
-            EqualsAndHashCode<TestData> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestData.class)
-                    .withSuper(new EqualsAndHashCodeImpl.Builder<>(BaseTestData.class).compareAndHash(BaseTestData::getSuperStringValue).build())
-                    .compareAndHash(TestData::getStringValue)
-                    .compareAndHashDeep(TestData::getArrayValue)
-                    .compareAndHashIdentity(TestData::getStringValue)
+        void shouldCombineHashSteps() {
+            TestObject testObject = testObject()
+                    .withIntValue(1337)
+                    .withStringValue("Test");
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getIntValue)
+                    .compareAndHash(TestObject::getStringValue)
                     .build();
 
-            int result = equalsAndHashCode.hashCode(testData);
+            int result = equalsAndHashCode.hashCode(testObject);
 
             assertThat(result)
-                    .isEqualTo(31 *
-                            (31 *
-                                    (31 *
-                                            (31 +
-                                                    (31 + baseStringValue.hashCode())
-                                            ) + stringValue.hashCode()
-                                    ) + Arrays.deepHashCode(arrayValue)
-                            ) + System.identityHashCode(stringValue));
+                    .isEqualTo(31 * (31 + Integer.hashCode(1337)) + "Test".hashCode());
         }
 
+        @Test
+        void shouldUseStringHashStep() {
+            TestObject testObject = testObject()
+                    .withStringValue("Test");
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getStringValue)
+                    .build();
+
+            int result = equalsAndHashCode.hashCode(testObject);
+
+            assertThat(result)
+                    .isEqualTo(31 + "Test".hashCode());
+        }
+
+        @Test
+        void shouldUseIdentityHashStep() {
+            Object value = new Object();
+            TestObject testObject = testObject()
+                    .withObjectValue(value);
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHashIdentity(TestObject::getObjectValue)
+                    .build();
+
+            int result = equalsAndHashCode.hashCode(testObject);
+
+            assertThat(result)
+                    .isEqualTo(31 + System.identityHashCode(value));
+        }
+
+        @Test
+        void shouldUseDeepHashStep() {
+            TestObject testObject = testObject()
+                    .withArrayValue("foo", "bar");
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHashDeep(TestObject::getArrayValue)
+                    .build();
+
+            int result = equalsAndHashCode.hashCode(testObject);
+
+            assertThat(result)
+                    .isEqualTo(31 + Arrays.deepHashCode(new Object[]{"foo", "bar"}));
+        }
+
+        @Test
+        void shouldUseIntHashStep() {
+            TestObject testObject = testObject()
+                    .withIntValue(1337);
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getIntValue)
+                    .build();
+
+            int result = equalsAndHashCode.hashCode(testObject);
+
+            assertThat(result)
+                    .isEqualTo(31 + Integer.hashCode(1337));
+        }
+
+        @Test
+        void shouldUseLongHashStep() {
+            TestObject testObject = testObject()
+                    .withLongValue(1337L);
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getLongValue)
+                    .build();
+
+            int result = equalsAndHashCode.hashCode(testObject);
+
+            assertThat(result)
+                    .isEqualTo(31 + Long.hashCode(1337L));
+        }
+
+        @Test
+        void shouldUseDoubleHashStep() {
+            TestObject testObject = testObject()
+                    .withDoubleValue(1337.0);
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getDoubleValue)
+                    .build();
+
+            int result = equalsAndHashCode.hashCode(testObject);
+
+            assertThat(result)
+                    .isEqualTo(31 + Double.hashCode(1337.0));
+        }
+
+        @ParameterizedTest
+        @ValueSource(booleans = {true, false})
+        void shouldUseBooleanHashStep(boolean booleanValue) {
+            TestObject testObject = testObject()
+                    .withBooleanValue(booleanValue);
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getBooleanValue)
+                    .build();
+
+            int result = equalsAndHashCode.hashCode(testObject);
+
+            assertThat(result)
+                    .isEqualTo(31 + Boolean.hashCode(booleanValue));
+        }
     }
 
-    private static class BaseTestData {
-
-        private final String superStringValue;
-
-        BaseTestData(String superStringValue) {
-            this.superStringValue = superStringValue;
-        }
-
-        String getSuperStringValue() {
-            return superStringValue;
-        }
-
-    }
-
-    private static class TestData extends BaseTestData {
-
-        private final String stringValue;
-        private final int intValue;
-        private final Object[] arrayValue;
-
-        TestData(String stringValue, int intValue, Object[] arrayValue, String baseStringValue) {
-            super(baseStringValue);
-            this.stringValue = stringValue;
-            this.intValue = intValue;
-            this.arrayValue = arrayValue;
-        }
-
-        String getStringValue() {
-            return stringValue;
-        }
-
-        int getIntValue() {
-            return intValue;
-        }
-
-        Object[] getArrayValue() {
-            return arrayValue;
-        }
+    @SuppressWarnings("StringOperationCanBeSimplified")
+    private static ImmutableTestObject testObject() {
+        return ImmutableTestObject
+                .builder()
+                .baseObjectValue("Base")
+                .stringValue(new String("Test"))
+                .objectValue(OBJECT)
+                .arrayValue("foo", "bar")
+                .intValue(1337)
+                .longValue(1234L)
+                .doubleValue(0.815)
+                .booleanValue(true)
+                .build();
     }
 
 }
