@@ -6,7 +6,7 @@ import ch.leadrian.equalizer.EqualsAndHashCode;
 public class Person {
 
     /*
-     * Compare age, firstName, lastName and children, but only hash using firstName and last name.
+     * Compare age, firstName, lastName and pets, but only hash using firstName and last name.
      * Using EQUALS_AND_HASH_CODE to implement equals() and hashCode() will satisfy the requirement
      * that two instances of Person will have the same hashCode() if they are equivalent.
      */
