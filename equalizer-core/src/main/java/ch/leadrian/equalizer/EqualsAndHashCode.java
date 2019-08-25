@@ -13,7 +13,7 @@ package ch.leadrian.equalizer;
  *     public class Person {
  *
  *         private static final EqualsAndHashCode&lt;Person&gt; EQUALS_AND_HASH_CODE = Equalizer.equalsAndHashCodeBuilder(Person.class)
- *                 .compare(Person::getAge)
+ *                 .comparePrimitive(Person::getAge)
  *                 .compareAndHash(Person::getName)
  *                 .build();
  *

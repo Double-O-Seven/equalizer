@@ -42,10 +42,10 @@ class EqualsAndHashCodeImplTest {
                         .compareAndHash(TestObject::getStringValue)
                         .compareAndHashIdentity(TestObject::getObjectValue)
                         .compareAndHashDeep(TestObject::getArrayValue)
-                        .compareAndHash(TestObject::getIntValue)
-                        .compareAndHash(TestObject::getLongValue)
-                        .compareAndHash(TestObject::getDoubleValue)
-                        .compareAndHash(TestObject::getBooleanValue)
+                        .compareAndHashPrimitive(TestObject::getIntValue)
+                        .compareAndHashPrimitive(TestObject::getLongValue)
+                        .compareAndHashPrimitive(TestObject::getDoubleValue)
+                        .compareAndHashPrimitive(TestObject::getBooleanValue)
                         .build();
             }
 
@@ -249,10 +249,10 @@ class EqualsAndHashCodeImplTest {
                         .compare(TestObject::getStringValue)
                         .compareIdentity(TestObject::getObjectValue)
                         .compareDeep(TestObject::getArrayValue)
-                        .compare(TestObject::getIntValue)
-                        .compare(TestObject::getLongValue)
-                        .compare(TestObject::getDoubleValue)
-                        .compare(TestObject::getBooleanValue)
+                        .comparePrimitive(TestObject::getIntValue)
+                        .comparePrimitive(TestObject::getLongValue)
+                        .comparePrimitive(TestObject::getDoubleValue)
+                        .comparePrimitive(TestObject::getBooleanValue)
                         .build();
             }
 
@@ -469,7 +469,7 @@ class EqualsAndHashCodeImplTest {
                     .withIntValue(1337)
                     .withStringValue("Test");
             EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                    .compareAndHash(TestObject::getIntValue)
+                    .compareAndHashPrimitive(TestObject::getIntValue)
                     .compareAndHash(TestObject::getStringValue)
                     .build();
 
@@ -527,7 +527,7 @@ class EqualsAndHashCodeImplTest {
             TestObject testObject = testObject()
                     .withIntValue(1337);
             EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                    .compareAndHash(TestObject::getIntValue)
+                    .compareAndHashPrimitive(TestObject::getIntValue)
                     .build();
 
             int result = equalsAndHashCode.hashCode(testObject);
@@ -541,7 +541,7 @@ class EqualsAndHashCodeImplTest {
             TestObject testObject = testObject()
                     .withLongValue(1337L);
             EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                    .compareAndHash(TestObject::getLongValue)
+                    .compareAndHashPrimitive(TestObject::getLongValue)
                     .build();
 
             int result = equalsAndHashCode.hashCode(testObject);
@@ -555,7 +555,7 @@ class EqualsAndHashCodeImplTest {
             TestObject testObject = testObject()
                     .withDoubleValue(1337.0);
             EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                    .compareAndHash(TestObject::getDoubleValue)
+                    .compareAndHashPrimitive(TestObject::getDoubleValue)
                     .build();
 
             int result = equalsAndHashCode.hashCode(testObject);
@@ -570,7 +570,7 @@ class EqualsAndHashCodeImplTest {
             TestObject testObject = testObject()
                     .withBooleanValue(booleanValue);
             EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                    .compareAndHash(TestObject::getBooleanValue)
+                    .compareAndHashPrimitive(TestObject::getBooleanValue)
                     .build();
 
             int result = equalsAndHashCode.hashCode(testObject);

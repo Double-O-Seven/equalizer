@@ -13,13 +13,13 @@ public interface EqualsAndHashCodeBuilder<T> {
 
     EqualsAndHashCodeBuilder<T> compare(Function<? super T, ?> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compare(ToIntFunction<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> comparePrimitive(ToIntFunction<? super T> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compare(ToLongFunction<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> comparePrimitive(ToLongFunction<? super T> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compare(ToDoubleFunction<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> comparePrimitive(ToDoubleFunction<? super T> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compare(Predicate<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> comparePrimitive(Predicate<? super T> valueExtractor);
 
     EqualsAndHashCodeBuilder<T> compareDeep(Function<? super T, ?> valueExtractor);
 
@@ -27,13 +27,13 @@ public interface EqualsAndHashCodeBuilder<T> {
 
     EqualsAndHashCodeBuilder<T> compareAndHash(Function<? super T, ?> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compareAndHash(ToIntFunction<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(ToIntFunction<? super T> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compareAndHash(ToLongFunction<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(ToLongFunction<? super T> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compareAndHash(ToDoubleFunction<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(ToDoubleFunction<? super T> valueExtractor);
 
-    EqualsAndHashCodeBuilder<T> compareAndHash(Predicate<? super T> valueExtractor);
+    EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(Predicate<? super T> valueExtractor);
 
     EqualsAndHashCodeBuilder<T> compareAndHashDeep(Function<? super T, ?> valueExtractor);
 

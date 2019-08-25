@@ -13,13 +13,13 @@ public interface EqualsBuilder<T> {
 
     EqualsBuilder<T> compare(Function<? super T, ?> valueExtractor);
 
-    EqualsBuilder<T> compare(ToIntFunction<? super T> valueExtractor);
+    EqualsBuilder<T> comparePrimitive(ToIntFunction<? super T> valueExtractor);
 
-    EqualsBuilder<T> compare(ToLongFunction<? super T> valueExtractor);
+    EqualsBuilder<T> comparePrimitive(ToLongFunction<? super T> valueExtractor);
 
-    EqualsBuilder<T> compare(ToDoubleFunction<? super T> valueExtractor);
+    EqualsBuilder<T> comparePrimitive(ToDoubleFunction<? super T> valueExtractor);
 
-    EqualsBuilder<T> compare(Predicate<? super T> valueExtractor);
+    EqualsBuilder<T> comparePrimitive(Predicate<? super T> valueExtractor);
 
     EqualsBuilder<T> compareDeep(Function<? super T, ?> valueExtractor);
 

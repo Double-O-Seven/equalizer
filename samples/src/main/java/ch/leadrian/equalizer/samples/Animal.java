@@ -7,7 +7,7 @@ import ch.leadrian.equalizer.HashCode;
 public class Animal {
 
     protected static final Equals<Animal> EQUALS = Equalizer.equalsBuilder(Animal.class)
-            .compare(Animal::getAge)
+            .comparePrimitive(Animal::getAge)
             .compare(Animal::getName)
             .build();
 

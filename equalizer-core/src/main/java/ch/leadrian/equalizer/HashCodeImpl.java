@@ -52,25 +52,25 @@ final class HashCodeImpl<T> implements HashCode<T> {
         }
 
         @Override
-        public HashCodeBuilder<T> hash(ToIntFunction<? super T> valueExtractor) {
+        public HashCodeBuilder<T> hashPrimitive(ToIntFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new IntHashStep<>(valueExtractor));
         }
 
         @Override
-        public HashCodeBuilder<T> hash(ToLongFunction<? super T> valueExtractor) {
+        public HashCodeBuilder<T> hashPrimitive(ToLongFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new LongHashStep<>(valueExtractor));
         }
 
         @Override
-        public HashCodeBuilder<T> hash(ToDoubleFunction<? super T> valueExtractor) {
+        public HashCodeBuilder<T> hashPrimitive(ToDoubleFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new DoubleHashStep<>(valueExtractor));
         }
 
         @Override
-        public HashCodeBuilder<T> hash(Predicate<? super T> valueExtractor) {
+        public HashCodeBuilder<T> hashPrimitive(Predicate<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new BooleanHashStep<>(valueExtractor));
         }

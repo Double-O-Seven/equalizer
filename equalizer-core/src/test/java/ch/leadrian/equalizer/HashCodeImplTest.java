@@ -46,7 +46,7 @@ class HashCodeImplTest {
                 .withIntValue(1337)
                 .withStringValue("Test");
         HashCode<TestObject> hashCode = new HashCodeImpl.Builder<TestObject>()
-                .hash(TestObject::getIntValue)
+                .hashPrimitive(TestObject::getIntValue)
                 .hash(TestObject::getStringValue)
                 .build();
 
@@ -104,7 +104,7 @@ class HashCodeImplTest {
         TestObject testObject = testObject()
                 .withIntValue(1337);
         HashCode<TestObject> hashCode = new HashCodeImpl.Builder<TestObject>()
-                .hash(TestObject::getIntValue)
+                .hashPrimitive(TestObject::getIntValue)
                 .build();
 
         int result = hashCode.hashCode(testObject);
@@ -118,7 +118,7 @@ class HashCodeImplTest {
         TestObject testObject = testObject()
                 .withLongValue(1337L);
         HashCode<TestObject> hashCode = new HashCodeImpl.Builder<TestObject>()
-                .hash(TestObject::getLongValue)
+                .hashPrimitive(TestObject::getLongValue)
                 .build();
 
         int result = hashCode.hashCode(testObject);
@@ -132,7 +132,7 @@ class HashCodeImplTest {
         TestObject testObject = testObject()
                 .withDoubleValue(1337.0);
         HashCode<TestObject> hashCode = new HashCodeImpl.Builder<TestObject>()
-                .hash(TestObject::getDoubleValue)
+                .hashPrimitive(TestObject::getDoubleValue)
                 .build();
 
         int result = hashCode.hashCode(testObject);
@@ -147,7 +147,7 @@ class HashCodeImplTest {
         TestObject testObject = testObject()
                 .withBooleanValue(booleanValue);
         HashCode<TestObject> hashCode = new HashCodeImpl.Builder<TestObject>()
-                .hash(TestObject::getBooleanValue)
+                .hashPrimitive(TestObject::getBooleanValue)
                 .build();
 
         int result = hashCode.hashCode(testObject);

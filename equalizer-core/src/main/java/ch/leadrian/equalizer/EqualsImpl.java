@@ -75,25 +75,25 @@ final class EqualsImpl<T> implements Equals<T> {
         }
 
         @Override
-        public EqualsBuilder<T> compare(ToIntFunction<? super T> valueExtractor) {
+        public EqualsBuilder<T> comparePrimitive(ToIntFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addComparisonStep(new IntComparisonStep<>(valueExtractor));
         }
 
         @Override
-        public EqualsBuilder<T> compare(ToLongFunction<? super T> valueExtractor) {
+        public EqualsBuilder<T> comparePrimitive(ToLongFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addComparisonStep(new LongComparisonStep<>(valueExtractor));
         }
 
         @Override
-        public EqualsBuilder<T> compare(ToDoubleFunction<? super T> valueExtractor) {
+        public EqualsBuilder<T> comparePrimitive(ToDoubleFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addComparisonStep(new DoubleComparisonStep<>(valueExtractor));
         }
 
         @Override
-        public EqualsBuilder<T> compare(Predicate<? super T> valueExtractor) {
+        public EqualsBuilder<T> comparePrimitive(Predicate<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addComparisonStep(new BooleanComparisonStep<>(valueExtractor));
         }

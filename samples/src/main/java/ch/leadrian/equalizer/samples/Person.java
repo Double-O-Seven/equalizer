@@ -11,7 +11,7 @@ public class Person {
      * that two instances of Person will have the same hashCode() if they are equivalent.
      */
     private static final EqualsAndHashCode<Person> EQUALS_AND_HASH_CODE = Equalizer.equalsAndHashCodeBuilder(Person.class)
-            .compare(Person::getAge)
+            .comparePrimitive(Person::getAge)
             .compareAndHash(Person::getFirstName)
             .compareAndHash(Person::getLastName)
             .compareDeep(Person::getPets)

@@ -23,10 +23,10 @@ class EqualsImplTest {
                 .compare(TestObject::getStringValue)
                 .compareIdentity(TestObject::getObjectValue)
                 .compareDeep(TestObject::getArrayValue)
-                .compare(TestObject::getIntValue)
-                .compare(TestObject::getLongValue)
-                .compare(TestObject::getDoubleValue)
-                .compare(TestObject::getBooleanValue)
+                .comparePrimitive(TestObject::getIntValue)
+                .comparePrimitive(TestObject::getLongValue)
+                .comparePrimitive(TestObject::getDoubleValue)
+                .comparePrimitive(TestObject::getBooleanValue)
                 .build();
     }
 

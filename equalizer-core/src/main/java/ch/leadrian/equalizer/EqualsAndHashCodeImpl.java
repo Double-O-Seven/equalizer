@@ -56,30 +56,30 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compare(ToIntFunction<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> comparePrimitive(ToIntFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
             return this;
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compare(ToLongFunction<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> comparePrimitive(ToLongFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
             return this;
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compare(ToDoubleFunction<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> comparePrimitive(ToDoubleFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
             return this;
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compare(Predicate<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> comparePrimitive(Predicate<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
             return this;
         }
 
@@ -106,34 +106,34 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compareAndHash(ToIntFunction<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(ToIntFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
-            hashCodeBuilder.hash(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
+            hashCodeBuilder.hashPrimitive(valueExtractor);
             return this;
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compareAndHash(ToLongFunction<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(ToLongFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
-            hashCodeBuilder.hash(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
+            hashCodeBuilder.hashPrimitive(valueExtractor);
             return this;
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compareAndHash(ToDoubleFunction<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(ToDoubleFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
-            hashCodeBuilder.hash(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
+            hashCodeBuilder.hashPrimitive(valueExtractor);
             return this;
         }
 
         @Override
-        public EqualsAndHashCodeBuilder<T> compareAndHash(Predicate<? super T> valueExtractor) {
+        public EqualsAndHashCodeBuilder<T> compareAndHashPrimitive(Predicate<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
-            equalsBuilder.compare(valueExtractor);
-            hashCodeBuilder.hash(valueExtractor);
+            equalsBuilder.comparePrimitive(valueExtractor);
+            hashCodeBuilder.hashPrimitive(valueExtractor);
             return this;
         }
 

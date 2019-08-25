@@ -12,13 +12,13 @@ public interface HashCodeBuilder<T> {
 
     HashCodeBuilder<T> hash(Function<? super T, ?> valueExtractor);
 
-    HashCodeBuilder<T> hash(ToIntFunction<? super T> valueExtractor);
+    HashCodeBuilder<T> hashPrimitive(ToIntFunction<? super T> valueExtractor);
 
-    HashCodeBuilder<T> hash(ToLongFunction<? super T> valueExtractor);
+    HashCodeBuilder<T> hashPrimitive(ToLongFunction<? super T> valueExtractor);
 
-    HashCodeBuilder<T> hash(ToDoubleFunction<? super T> valueExtractor);
+    HashCodeBuilder<T> hashPrimitive(ToDoubleFunction<? super T> valueExtractor);
 
-    HashCodeBuilder<T> hash(Predicate<? super T> valueExtractor);
+    HashCodeBuilder<T> hashPrimitive(Predicate<? super T> valueExtractor);
 
     HashCodeBuilder<T> hashDeep(Function<? super T, ?> valueExtractor);
 
