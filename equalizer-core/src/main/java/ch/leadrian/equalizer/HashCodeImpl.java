@@ -1,5 +1,10 @@
 package ch.leadrian.equalizer;
 
+import ch.leadrian.equalizer.util.function.ToByteFunction;
+import ch.leadrian.equalizer.util.function.ToCharFunction;
+import ch.leadrian.equalizer.util.function.ToFloatFunction;
+import ch.leadrian.equalizer.util.function.ToShortFunction;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -52,6 +57,24 @@ final class HashCodeImpl<T> implements HashCode<T> {
         }
 
         @Override
+        public HashCodeBuilder<T> hashPrimitive(ToByteFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new ByteHashStep<>(valueExtractor));
+        }
+
+        @Override
+        public HashCodeBuilder<T> hashPrimitive(ToShortFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new ShortHashStep<>(valueExtractor));
+        }
+
+        @Override
+        public HashCodeBuilder<T> hashPrimitive(ToCharFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new CharHashStep<>(valueExtractor));
+        }
+
+        @Override
         public HashCodeBuilder<T> hashPrimitive(ToIntFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new IntHashStep<>(valueExtractor));
@@ -61,6 +84,12 @@ final class HashCodeImpl<T> implements HashCode<T> {
         public HashCodeBuilder<T> hashPrimitive(ToLongFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addHashStep(new LongHashStep<>(valueExtractor));
+        }
+
+        @Override
+        public HashCodeBuilder<T> hashPrimitive(ToFloatFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addHashStep(new FloatHashStep<>(valueExtractor));
         }
 
         @Override

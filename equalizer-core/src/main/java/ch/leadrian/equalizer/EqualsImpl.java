@@ -1,5 +1,10 @@
 package ch.leadrian.equalizer;
 
+import ch.leadrian.equalizer.util.function.ToByteFunction;
+import ch.leadrian.equalizer.util.function.ToCharFunction;
+import ch.leadrian.equalizer.util.function.ToFloatFunction;
+import ch.leadrian.equalizer.util.function.ToShortFunction;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -75,6 +80,24 @@ final class EqualsImpl<T> implements Equals<T> {
         }
 
         @Override
+        public EqualsBuilder<T> comparePrimitive(ToByteFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new ByteComparisonStep<>(valueExtractor));
+        }
+
+        @Override
+        public EqualsBuilder<T> comparePrimitive(ToShortFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new ShortComparisonStep<>(valueExtractor));
+        }
+
+        @Override
+        public EqualsBuilder<T> comparePrimitive(ToCharFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new CharComparisonStep<>(valueExtractor));
+        }
+
+        @Override
         public EqualsBuilder<T> comparePrimitive(ToIntFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addComparisonStep(new IntComparisonStep<>(valueExtractor));
@@ -84,6 +107,12 @@ final class EqualsImpl<T> implements Equals<T> {
         public EqualsBuilder<T> comparePrimitive(ToLongFunction<? super T> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must not be null");
             return addComparisonStep(new LongComparisonStep<>(valueExtractor));
+        }
+
+        @Override
+        public EqualsBuilder<T> comparePrimitive(ToFloatFunction<? super T> valueExtractor) {
+            requireNonNull(valueExtractor, "valueExtractor must not be null");
+            return addComparisonStep(new FloatComparisonStep<>(valueExtractor));
         }
 
         @Override

@@ -11,9 +11,17 @@ interface TestObject extends TestObjectBase {
 
     Object[] getArrayValue();
 
+    byte getByteValue();
+
+    short getShortValue();
+
+    char getCharValue();
+
     int getIntValue();
 
     long getLongValue();
+
+    float getFloatValue();
 
     double getDoubleValue();
 
