@@ -47,6 +47,12 @@ package ch.leadrian.equalizer;
  */
 public interface HashCode<T> {
 
+    /**
+     * Computes the hash code for a nullable value of type {@code T}.
+     *
+     * @param object The instance of type {@code T} for which a hash code should be computed. The value may be {@code null}.
+     * @return Hash code for {@code object}.
+     */
     int hashCode(T object);
 
 }

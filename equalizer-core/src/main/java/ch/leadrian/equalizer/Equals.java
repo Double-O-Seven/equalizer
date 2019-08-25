@@ -49,7 +49,7 @@ public interface Equals<T> {
 
     /**
      * @param object      Instance of the class for which {@link java.lang.Object#equals(Object)} has been implemented
-     *                    using {@link Equals}.
+     *                    using {@link Equals}. The value can be {@code null}.
      * @param otherObject The nullable value with which {@code object} is compared.
      * @return {@code true} if and only if {@code object} is equivalent to {@code otherObject} according to the
      * specification of {@link java.lang.Object#equals(Object)}, else {@code false}.
