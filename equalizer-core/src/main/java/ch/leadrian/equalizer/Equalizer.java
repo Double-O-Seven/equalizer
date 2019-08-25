@@ -10,7 +10,6 @@ package ch.leadrian.equalizer;
 public final class Equalizer {
 
     private Equalizer() {
-        throw new UnsupportedOperationException();
     }
 
     /**
