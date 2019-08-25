@@ -6,9 +6,11 @@ plugins {
 
 val codacyCoverageReport: Configuration by configurations.creating
 
+val immutablesVersion = "2.7.4"
+
 dependencies {
-    testAnnotationProcessor(group = "org.immutables", name = "value", version = "2.7.4")
-    testImplementation(group = "org.immutables", name = "value", version = "2.7.4", classifier = "annotations")
+    testAnnotationProcessor(group = "org.immutables", name = "value", version = immutablesVersion)
+    testImplementation(group = "org.immutables", name = "value", version = immutablesVersion, classifier = "annotations")
 
     codacyCoverageReport(group = "com.codacy", name = "codacy-coverage-reporter", version = "6.0.2")
 }
