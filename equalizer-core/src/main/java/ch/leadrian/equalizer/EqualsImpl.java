@@ -32,7 +32,7 @@ final class EqualsImpl<T> implements Equals<T> {
             return true;
         }
 
-        if (object == null) {
+        if (object == null || otherObject == null) {
             return false;
         }
 
