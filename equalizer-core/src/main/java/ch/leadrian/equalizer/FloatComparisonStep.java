@@ -2,6 +2,8 @@ package ch.leadrian.equalizer;
 
 import ch.leadrian.equalizer.util.function.ToFloatFunction;
 
+import static java.lang.Float.floatToIntBits;
+
 final class FloatComparisonStep<T> implements ComparisonStep<T> {
 
     private final ToFloatFunction<? super T> valueExtractor;
@@ -12,6 +14,8 @@ final class FloatComparisonStep<T> implements ComparisonStep<T> {
 
     @Override
     public boolean isEqual(T object1, T object2) {
-        return valueExtractor.applyAsFloat(object1) == valueExtractor.applyAsFloat(object2);
+        float value1 = valueExtractor.applyAsFloat(object1);
+        float value2 = valueExtractor.applyAsFloat(object2);
+        return floatToIntBits(value1) == floatToIntBits(value2);
     }
 }
