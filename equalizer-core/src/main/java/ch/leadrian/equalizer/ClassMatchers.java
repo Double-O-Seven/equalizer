@@ -52,7 +52,7 @@ public final class ClassMatchers {
 
     /**
      * <p>
-     * Two values are considered to have matching classes of both are direct instances of {@code T}. If either value
+     * Two values are considered to have matching classes if both are direct instances of {@code T}. If either value
      * is an instance of a subclass of {@code T}, equivalence will be impossible.
      * </p>
      * <p>
