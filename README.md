@@ -15,6 +15,7 @@ Java 8 or newer is required though.
 *   Configure one static instance of `Equals` and `HashCode` or `EqualsAndHashCode` and reuse it across all instances to minimize garbage.
 *   Use Java 8 lambdas to define which attributes should be compared and hashed.
 *   Easily honour the contracts between `equals()` and `hashCode()` without a lot of boilerplate code.
+*   No dependencies to other libraries
 
 ## Examples
 
