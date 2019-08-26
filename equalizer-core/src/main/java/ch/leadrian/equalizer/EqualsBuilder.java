@@ -166,7 +166,7 @@ public interface EqualsBuilder<T> {
     /**
      * Builds an {@link Equals} instance.
      *
-     * @return An instance of {@link Equals} that uses the configured {@code valueExtractors} to determine the equivalence of
+     * @return An instance of {@link Equals} that uses the configured {@code valueExtractor}s to determine the equivalence of
      * two instances of type {@code T}.
      */
     Equals<T> build();
