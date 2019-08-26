@@ -7,15 +7,15 @@
 A small library to greatly simplify the implementation of `equals()` and `hashCode()` in Java classes (and Kotlin classes, if data classes are not enough).
 Java 8 or newer is required though.
 
-### Why Equalizer\?
+## Why Equalizer
 
-  * Fluent, highly readable API for `EqualsBuilder`, `HashCodeBuilder` and `EqualsAndHashCodeBuilder`.
-  * Garbage-free implementations of `equals()` and `hashCode()`: If used correctly, Equalizer does not generate any garbage like `Iterator`s or boxed primitives.
-  * Configure one static instance of `Equals` and `HashCode` or `EqualsAndHashCode` and reuse it across all instances to minimize garbage.
-  * Use Java 8 lambdas to define which attributes should be compared and hashed.
-  * Easily honour the contracts between `equals()` and `hashCode()` without a lot of boilerplate code.
+*   Fluent, highly readable API for `EqualsBuilder`, `HashCodeBuilder` and `EqualsAndHashCodeBuilder`.
+*   Garbage-free implementations of `equals()` and `hashCode()`: If used correctly, Equalizer does not generate any garbage like `Iterator`s or boxed primitives.
+*   Configure one static instance of `Equals` and `HashCode` or `EqualsAndHashCode` and reuse it across all instances to minimize garbage.
+*   Use Java 8 lambdas to define which attributes should be compared and hashed.
+*   Easily honour the contracts between `equals()` and `hashCode()` without a lot of boilerplate code.
 
-### Examples
+## Examples
 
 Using Equalizer is very easy.
 
@@ -113,43 +113,43 @@ public class Person {
 }
 ```
 
-### API
+## API
 
 The basic API provides the following classes:
 
-  * `Equalizer`: A class containing factory methods to instantiate `EqualsBuilder`s, `HashCodeBuilder`s and `EqualsAndHashCodeBuilder`s.
-  * `Equals`: Delegate used to implement `equals()`
-  * `EqualsBuilder`: Fluent builder for `Equals`
-  * `HashCode`: Delegate used to implement `hashCode()`
-  * `HashCodeBuilder`: Fluent builder for `HashCode`
-  * `EqualsAndHashCode`: Combination of `Equals` and `HashCode` honouring the contracts between `equals()` and `hashCode()`
-  * `EqualsAndHashCodeBuilder`: Fluent builder for `EqualsAndHashCode`
-  * `ClassMatcher`: Matcher to determine whether two instances of a class can be compared
-  * `ClassMatchers`: A class containing factory methods for common `ClassMatcher`s
+*   `Equalizer`: A class containing factory methods to instantiate `EqualsBuilder`s, `HashCodeBuilder`s and `EqualsAndHashCodeBuilder`s.
+*   `Equals`: Delegate used to implement `equals()`
+*   `EqualsBuilder`: Fluent builder for `Equals`
+*   `HashCode`: Delegate used to implement `hashCode()`
+*   `HashCodeBuilder`: Fluent builder for `HashCode`
+*   `EqualsAndHashCode`: Combination of `Equals` and `HashCode` honouring the contracts between `equals()` and `hashCode()`
+*   `EqualsAndHashCodeBuilder`: Fluent builder for `EqualsAndHashCode`
+*   `ClassMatcher`: Matcher to determine whether two instances of a class can be compared
+*   `ClassMatchers`: A class containing factory methods for common `ClassMatcher`s
   
 `EqualsBuilder`  and `EqualsAndHashCodeBuilder` contain various methods to compare various types of attributes:
-  * `compare`: Compare reference values
-  * `comparePrimitive`: Compare primitive values
-  * `compareDeep`: Compare contents of arrays
-  * `compareIdentity`: Compare reference values using reference equality
-  * `equalIf`: Add custom conditions for equality
-  * `withSuper`: Use the `Equals` or `EqualsAndHashCode` instances of a superclass
-  * `classMatcher`: Configure, which instances of a class can be compared
+*   `compare`: Compare reference values
+*   `comparePrimitive`: Compare primitive values
+*   `compareDeep`: Compare contents of arrays
+*   `compareIdentity`: Compare reference values using reference equality
+*   `equalIf`: Add custom conditions for equality
+*   `withSuper`: Use the `Equals` or `EqualsAndHashCode` instances of a superclass
+*   `classMatcher`: Configure, which instances of a class can be compared
   
 `HashCodeBuilder` contains various methods to hash various types of attributes:
-  * `hash`: Use reference values for hashing
-  * `hashPrimitive`: Use a primitive values for hashing
-  * `hashDeep`: Use contents of arrays for hashing
-  * `hashIdentity`: Use identity hash codes for hashing
-  * `withSuper`: Use `HashCode` instances of a superclass for hashing
+*   `hash`: Use reference values for hashing
+*   `hashPrimitive`: Use a primitive values for hashing
+*   `hashDeep`: Use contents of arrays for hashing
+*   `hashIdentity`: Use identity hash codes for hashing
+*   `withSuper`: Use `HashCode` instances of a superclass for hashing
   
 `EqualsAndHashCodeBuilder` also includes the following methods to use the same attributes for equality checks and hashing in order to honour the contracts between `equals()` and `hashCode()`:
-  * `compareAndHash`: Compare and hash reference values
-  * `compareAndHashPrimitive`: Compare and hash primitive values
-  * `compareAndHashDeep`: Compare and hash contents of arrays
-  * `compareAndHashIdentity`: Compare reference values using reference equality and use identity hash codes for hashing
+*   `compareAndHash`: Compare and hash reference values
+*   `compareAndHashPrimitive`: Compare and hash primitive values
+*   `compareAndHashDeep`: Compare and hash contents of arrays
+*   `compareAndHashIdentity`: Compare reference values using reference equality and use identity hash codes for hashing
   
-### Download
+## Download
 
 For Maven:
 ```xml
