@@ -29,10 +29,11 @@ import ch.leadrian.equalizer.EqualsAndHashCode;
 
 public class Person {
 
-    private static final EqualsAndHashCode<Person> EQUALS_AND_HASH_CODE = Equalizer.equalsAndHashCodeBuilder()
-            .compareAndHashPrimitive(Person::getAge)
-            .compare(Person::getName)
-            .build();
+    private static final EqualsAndHashCode<Person> EQUALS_AND_HASH_CODE =
+            Equalizer.equalsAndHashCodeBuilder()
+                    .compareAndHashPrimitive(Person::getAge)
+                    .compare(Person::getName)
+                    .build();
 
     private final int age;
     private final String name;
@@ -73,14 +74,16 @@ import ch.leadrian.equalizer.HashCode;
 
 public class Person {
 
-    private static final Equals<Person> EQUALS = Equalizer.equalsBuilder()
-            .comparePrimitive(Person::getAge)
-            .compare(Person::getName)
-            .build();
+    private static final Equals<Person> EQUALS = 
+            Equalizer.equalsBuilder()
+                    .comparePrimitive(Person::getAge)
+                    .compare(Person::getName)
+                    .build();
 
-    private static final HashCode<Person> HASH_CODE = Equalizer.hashCodeBuilder()
-            .hashPrimitive(Person::getAge)
-            .build();
+    private static final HashCode<Person> HASH_CODE = 
+            Equalizer.hashCodeBuilder()
+                    .hashPrimitive(Person::getAge)
+                    .build();
 
     private final int age;
     private final String name;
