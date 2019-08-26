@@ -32,6 +32,17 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> withSuper(Equals<? super T> superEquals);
 
     /**
+     * Configure a class matcher. By default, {@link ClassMatchers#instanceOf(Class)} is used. You may override
+     * this using this method.
+     *
+     * @param classMatcher class matcher used to determine whether two instances of {@code T} can be compared
+     * @return {@code this}
+     * @see ClassMatcher
+     * @see ClassMatchers
+     */
+    EqualsBuilder<T> classMatcher(ClassMatcher<T> classMatcher);
+
+    /**
      * Configures an {@link Equals} instance to compare object values extracted by {@code valueExtractor} to determine the
      * equivalence between two instances of type {@code T}.
      * The value passed to {@code valueExtractor} is guaranteed to be non-null.

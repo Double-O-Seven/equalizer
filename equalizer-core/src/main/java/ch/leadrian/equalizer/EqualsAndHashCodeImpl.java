@@ -54,6 +54,12 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
         }
 
         @Override
+        public EqualsAndHashCodeBuilder<T> classMatcher(ClassMatcher<T> classMatcher) {
+            equalsBuilder.classMatcher(classMatcher);
+            return this;
+        }
+
+        @Override
         public EqualsAndHashCodeBuilder<T> compare(Function<? super T, ?> valueExtractor) {
             requireNonNull(valueExtractor, "valueExtractor must be null");
             equalsBuilder.compare(valueExtractor);

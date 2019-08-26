@@ -87,6 +87,21 @@ class EqualsImplTest implements EqualsTest {
     }
 
     @Test
+    void givenClassesDoNotMatchItShouldReturnFalse() {
+        TestObject testObject1 = getTestObject();
+        TestObject testObject2 = getTestObject();
+        Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class)
+                .compare(TestObject::getStringValue)
+                .classMatcher((v1, v2) -> false)
+                .build();
+
+        boolean result = equals.equals(testObject1, testObject2);
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @Test
     void givenDelegatingComparisonFailsItShouldReturnFalse() {
         TestObject testObject1 = getTestObject();
         TestObject testObject2 = getTestObject();

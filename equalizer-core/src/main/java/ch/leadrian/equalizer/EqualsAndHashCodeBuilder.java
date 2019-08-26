@@ -37,6 +37,17 @@ public interface EqualsAndHashCodeBuilder<T> {
     EqualsAndHashCodeBuilder<T> withSuper(EqualsAndHashCode<? super T> superEqualsAndHashCode);
 
     /**
+     * Configures a {@link ClassMatcher} for the {@link Equals} part of {@link EqualsAndHashCode}.
+     *
+     * @param classMatcher class matcher used to determine whether two instances of {@code T} can be compared
+     * @return {@code this}
+     * @see ClassMatcher
+     * @see ClassMatchers
+     * @see EqualsBuilder#classMatcher(ClassMatcher)
+     */
+    EqualsAndHashCodeBuilder<T> classMatcher(ClassMatcher<T> classMatcher);
+
+    /**
      * Configure the {@link Equals} part of {@link EqualsAndHashCode}.
      *
      * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.

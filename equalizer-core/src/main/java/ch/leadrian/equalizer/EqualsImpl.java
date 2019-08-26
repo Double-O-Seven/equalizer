@@ -20,10 +20,12 @@ final class EqualsImpl<T> implements Equals<T> {
 
     private final Class<T> targetClass;
     private final List<ComparisonStep<T>> comparisonSteps;
+    private final ClassMatcher<T> classMatcher;
 
-    private EqualsImpl(Class<T> targetClass, List<? extends ComparisonStep<T>> comparisonSteps) {
+    private EqualsImpl(Class<T> targetClass, List<? extends ComparisonStep<T>> comparisonSteps, ClassMatcher<T> classMatcher) {
         this.targetClass = targetClass;
         this.comparisonSteps = new ArrayList<>(comparisonSteps);
+        this.classMatcher = classMatcher;
     }
 
     @Override
@@ -36,7 +38,7 @@ final class EqualsImpl<T> implements Equals<T> {
             return false;
         }
 
-        if (!targetClass.isInstance(otherObject)) {
+        if (!classMatcher.classesMatch(object, otherObject)) {
             return false;
         }
 
@@ -61,16 +63,25 @@ final class EqualsImpl<T> implements Equals<T> {
 
         private final Class<T> targetClass;
         private final List<ComparisonStep<T>> comparisonSteps = new ArrayList<>();
+        private ClassMatcher<T> classMatcher;
 
         Builder(Class<T> targetClass) {
             requireNonNull(targetClass, "targetClass must not be null");
             this.targetClass = targetClass;
+            this.classMatcher = ClassMatchers.instanceOf(targetClass);
         }
 
         @Override
         public EqualsBuilder<T> withSuper(Equals<? super T> superEquals) {
             requireNonNull(superEquals, "superEquals must not be null");
             return equalIf(superEquals::equals);
+        }
+
+        @Override
+        public EqualsBuilder<T> classMatcher(ClassMatcher<T> classMatcher) {
+            requireNonNull(classMatcher, "classMatcher must not be null");
+            this.classMatcher = classMatcher;
+            return this;
         }
 
         @Override
@@ -152,7 +163,7 @@ final class EqualsImpl<T> implements Equals<T> {
 
         @Override
         public Equals<T> build() {
-            return new EqualsImpl<>(targetClass, comparisonSteps);
+            return new EqualsImpl<>(targetClass, comparisonSteps, classMatcher);
         }
     }
 }

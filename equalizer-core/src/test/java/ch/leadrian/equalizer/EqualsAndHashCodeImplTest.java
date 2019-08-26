@@ -26,6 +26,59 @@ class EqualsAndHashCodeImplTest {
     @Nested
     class EqualsTests {
 
+        @Test
+        void givenValuesAreTheSameAndNoComparisonsItShouldReturnTrue() {
+            TestObject testObject = testObject();
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class).build();
+
+            boolean result = equalsAndHashCode.equals(testObject, testObject);
+
+            assertThat(result)
+                    .isTrue();
+        }
+
+        @Test
+        void givenValuesAreNotTheSameAndNoComparisonsItShouldReturnFalse() {
+            TestObject testObject1 = testObject();
+            TestObject testObject2 = testObject();
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class).build();
+
+            boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+            assertThat(result)
+                    .isFalse();
+        }
+
+        @Test
+        void givenClassesDoNotMatchItShouldReturnFalse() {
+            TestObject testObject1 = testObject();
+            TestObject testObject2 = testObject();
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compare(TestObject::getStringValue)
+                    .classMatcher((v1, v2) -> false)
+                    .build();
+
+            boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+            assertThat(result)
+                    .isFalse();
+        }
+
+        @Test
+        void givenDelegatingComparisonFailsItShouldReturnFalse() {
+            TestObject testObject1 = testObject();
+            TestObject testObject2 = testObject();
+            EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compare(TestObject::getStringValue)
+                    .equalIf((value1, value2) -> false)
+                    .build();
+
+            boolean result = equalsAndHashCode.equals(testObject1, testObject2);
+
+            assertThat(result)
+                    .isFalse();
+        }
+
         @Nested
         class CompareAndHashTests implements EqualsTest {
 
@@ -60,44 +113,6 @@ class EqualsAndHashCodeImplTest {
             @Override
             public Equals<TestObject> getEquals() {
                 return equalsAndHashCode;
-            }
-
-            @Test
-            void givenValuesAreTheSameAndNoComparisonsItShouldReturnTrue() {
-                TestObject testObject = testObject();
-                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
-
-                boolean result = equals.equals(testObject, testObject);
-
-                assertThat(result)
-                        .isTrue();
-            }
-
-            @Test
-            void givenValuesAreNotTheSameAndNoComparisonsItShouldReturnFalse() {
-                TestObject testObject1 = testObject();
-                TestObject testObject2 = testObject();
-                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
-
-                boolean result = equals.equals(testObject1, testObject2);
-
-                assertThat(result)
-                        .isFalse();
-            }
-
-            @Test
-            void givenDelegatingComparisonFailsItShouldReturnFalse() {
-                TestObject testObject1 = testObject();
-                TestObject testObject2 = testObject();
-                EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                        .compare(TestObject::getStringValue)
-                        .equalIf((value1, value2) -> false)
-                        .build();
-
-                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
-
-                assertThat(result)
-                        .isFalse();
             }
 
             @Test
@@ -151,44 +166,6 @@ class EqualsAndHashCodeImplTest {
             @Override
             public ImmutableTestObject getTestObject() {
                 return testObject();
-            }
-
-            @Test
-            void givenValuesAreTheSameAndNoComparisonsItShouldReturnTrue() {
-                TestObject testObject = getTestObject();
-                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
-
-                boolean result = equals.equals(testObject, testObject);
-
-                assertThat(result)
-                        .isTrue();
-            }
-
-            @Test
-            void givenValuesAreNotTheSameAndNoComparisonsItShouldReturnFalse() {
-                TestObject testObject1 = getTestObject();
-                TestObject testObject2 = getTestObject();
-                Equals<TestObject> equals = new EqualsImpl.Builder<>(TestObject.class).build();
-
-                boolean result = equals.equals(testObject1, testObject2);
-
-                assertThat(result)
-                        .isFalse();
-            }
-
-            @Test
-            void givenDelegatingComparisonFailsItShouldReturnFalse() {
-                TestObject testObject1 = getTestObject();
-                TestObject testObject2 = getTestObject();
-                EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                        .compare(TestObject::getStringValue)
-                        .equalIf((value1, value2) -> false)
-                        .build();
-
-                boolean result = equalsAndHashCode.equals(testObject1, testObject2);
-
-                assertThat(result)
-                        .isFalse();
             }
 
             @Test
