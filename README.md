@@ -32,7 +32,7 @@ import ch.leadrian.equalizer.EqualsAndHashCode;
 public class Person {
 
     private static final EqualsAndHashCode<Person> EQUALS_AND_HASH_CODE =
-            Equalizer.equalsAndHashCodeBuilder()
+            Equalizer.equalsAndHashCodeBuilder(Person.class)
                     .compareAndHashPrimitive(Person::getAge)
                     .compare(Person::getName)
                     .build();
@@ -77,7 +77,7 @@ import ch.leadrian.equalizer.HashCode;
 public class Person {
 
     private static final Equals<Person> EQUALS = 
-            Equalizer.equalsBuilder()
+            Equalizer.equalsBuilder(Person.class)
                     .comparePrimitive(Person::getAge)
                     .compare(Person::getName)
                     .build();
