@@ -16,6 +16,8 @@
 
 package ch.leadrian.equalizer;
 
+import java.util.function.Function;
+
 /**
  * <p>
  * Equivalence check for {@link java.lang.Object#equals(Object)}.
@@ -62,6 +64,32 @@ package ch.leadrian.equalizer;
  * @see EqualsBuilder
  */
 public interface Equals<T> {
+
+    /**
+     * <p>
+     * Convenient factory method to build an {@link Equals} instance using the given value extractors.
+     * The {@code valueExtractors} are applied using {@link EqualsBuilder#compare(Function)}.
+     * </p>
+     * <p>
+     * If any primitives or arrays are used to determine equivalence or if reference equality is checked, it is
+     * recommended to build an {@link Equals} using {@link Equalizer#equalsBuilder(Class)} with appropriate methods
+     * like {@link EqualsBuilder#comparePrimitive}, {@link EqualsBuilder#compareIdentity(Function)} or {@link EqualsBuilder#compareDeep(Function)}.
+     * </p>
+     *
+     * @param targetClass     The class for which {@link Equals} should be used to implement {@link Object#equals(Object)}
+     * @param valueExtractors Functions used to extract values from instances of {@code T} to be compared for
+     *                        equivalence checks. The extracted values may be {@code null}.
+     * @param <T>             Type of {@code targetClass}
+     * @return an {@link Equals} instance using the {@code valueExtractors} to compute equivalence
+     */
+    @SafeVarargs
+    static <T> Equals<T> of(Class<T> targetClass, Function<? super T, ?>... valueExtractors) {
+        EqualsBuilder<T> builder = Equalizer.equalsBuilder(targetClass);
+        for (Function<? super T, ?> valueExtractor : valueExtractors) {
+            builder.compare(valueExtractor);
+        }
+        return builder.build();
+    }
 
     /**
      * @param object      Instance of the class for which {@link java.lang.Object#equals(Object)} has been implemented
