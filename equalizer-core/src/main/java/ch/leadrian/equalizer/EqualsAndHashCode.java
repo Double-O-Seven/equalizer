@@ -16,6 +16,8 @@
 
 package ch.leadrian.equalizer;
 
+import java.util.function.Function;
+
 /**
  * <p>
  * Combines {@link Equals} and {@link HashCode}. The combined interfaces guarantees
@@ -67,4 +69,32 @@ package ch.leadrian.equalizer;
  * @see EqualsAndHashCodeBuilder
  */
 public interface EqualsAndHashCode<T> extends Equals<T>, HashCode<T> {
+
+    /**
+     * <p>
+     * Convenient factory method to build an {@link EqualsAndHashCode} instance using the given value extractors.
+     * The {@code valueExtractors} are applied using {@link EqualsAndHashCodeBuilder#compareAndHash(Function)}.
+     * </p>
+     * <p>
+     * If any primitives or arrays are used to compare or hash values, or if reference equality is checked, it is
+     * recommended to build an {@link Equals} using {@link Equalizer#equalsAndHashCodeBuilder(Class)} with appropriate methods
+     * like {@link EqualsAndHashCodeBuilder#compareAndHashPrimitive}, {@link EqualsAndHashCodeBuilder#compareAndHashIdentity(Function)}
+     * or {@link EqualsAndHashCodeBuilder#compareAndHashDeep(Function)}.
+     * </p>
+     *
+     * @param targetClass     The class for which {@link EqualsAndHashCode} should be used to implement {@link Object#equals(Object)}
+     * @param valueExtractors Functions used to extract values from instances of {@code T} to be compared for
+     *                        equivalence checks, or to be used to compute hashes. The extracted values may be {@code null}.
+     * @param <T>             Type of {@code targetClass}
+     * @return an {@link EqualsAndHashCode} instance using the {@code valueExtractors} to compute equivalence or compute hashes
+     */
+    @SafeVarargs
+    static <T> EqualsAndHashCode<T> of(Class<T> targetClass, Function<? super T, ?>... valueExtractors) {
+        EqualsAndHashCodeBuilder<T> builder = Equalizer.equalsAndHashCodeBuilder(targetClass);
+        for (Function<? super T, ?> valueExtractor : valueExtractors) {
+            builder.compareAndHash(valueExtractor);
+        }
+        return builder.build();
+    }
+
 }
