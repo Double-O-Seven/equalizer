@@ -16,6 +16,8 @@
 
 package ch.leadrian.equalizer;
 
+import java.util.function.Function;
+
 /**
  * <p>
  * Hash code computation for {@link Object#hashCode()}.
@@ -62,6 +64,31 @@ package ch.leadrian.equalizer;
  * @see HashCodeBuilder
  */
 public interface HashCode<T> {
+
+    /**
+     * <p>
+     * Convenient factory method to build a {@link HashCode} instance using the given value extractors.
+     * The {@code valueExtractors} are applied using {@link HashCodeBuilder#hash(Function)}.
+     * </p>
+     * <p>
+     * If any primitives or arrays are used to hash or if an identity hash code is used, it is
+     * recommended to build a {@link HashCode} using {@link Equalizer#hashCodeBuilder()} with appropriate methods
+     * like {@link HashCodeBuilder#hashPrimitive}, {@link HashCodeBuilder#hashIdentity(Function)} or {@link HashCodeBuilder#hashDeep(Function)}.
+     * </p>
+     *
+     * @param valueExtractors Functions used to extract values from instances of {@code T} to be hashed.
+     *                        The extracted values may be {@code null}.
+     * @param <T>             Type for which a {@link HashCode} instance should be created
+     * @return a {@link HashCode} instance using the {@code valueExtractors} to compute hashes
+     */
+    @SafeVarargs
+    static <T> HashCode<T> of(Function<? super T, ?>... valueExtractors) {
+        HashCodeBuilder<T> builder = Equalizer.hashCodeBuilder();
+        for (Function<? super T, ?> valueExtractor : valueExtractors) {
+            builder.hash(valueExtractor);
+        }
+        return builder.build();
+    }
 
     /**
      * Computes the hash code for a nullable value of type {@code T}.
