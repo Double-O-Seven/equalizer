@@ -96,7 +96,7 @@ class EqualsAndHashCodeImplTest {
         }
 
         @Nested
-        class CompareAndHashTests implements EqualsTest {
+        class CompareAndHashTests implements EqualsTestBase {
 
             private EqualsAndHashCode<TestObject> equalsAndHashCode;
 
@@ -149,7 +149,7 @@ class EqualsAndHashCodeImplTest {
         }
 
         @Nested
-        class CompareTests implements EqualsTest {
+        class CompareTests implements EqualsTestBase {
 
             private EqualsAndHashCode<TestObject> equalsAndHashCode;
 

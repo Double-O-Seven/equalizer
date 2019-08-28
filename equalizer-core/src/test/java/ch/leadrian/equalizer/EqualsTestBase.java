@@ -22,7 +22,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-interface EqualsTest {
+interface EqualsTestBase {
 
     ImmutableTestObject getTestObject();
 
