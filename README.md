@@ -150,7 +150,12 @@ The basic API provides the following classes:
 *   `compareAndHashPrimitive`: Compare and hash primitive values
 *   `compareAndHashDeep`: Compare and hash contents of arrays
 *   `compareAndHashIdentity`: Compare reference values using reference equality and use identity hash codes for hashing
-  
+
+`Equals`, `HashCode` and `EqualsAndHashCode` also contain factory methods for simple instantation without using a builder:
+*   `Equals.of`
+*   `HashCode.of`
+*   `EqualsAndHashCode.of`
+
 ## Download
 
 For Maven:
@@ -158,16 +163,16 @@ For Maven:
 <dependency>
   <groupId>ch.leadrian.equalizer</groupId>
   <artifactId>equalizer-core</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
 For Gradle (Groovy DSL):
 ```groovy
-implementation 'ch.leadrian.equalizer:equalizer-core:1.0.1'
+implementation 'ch.leadrian.equalizer:equalizer-core:1.1.0'
 ```
 
 For Gradle (Kotlin DSL):
 ```groovy
-implementation("ch.leadrian.equalizer:equalizer-core:1.0.1")
+implementation("ch.leadrian.equalizer:equalizer-core:1.1.0")
 ```
