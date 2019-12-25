@@ -63,6 +63,7 @@ jacoco {
 }
 
 val mavenJava by publishing.publications.creating(MavenPublication::class) {
+    from(components["java"])
     pom {
         name.set("Equalizer")
         description.set("Fluent builders for correct equals() and hashCode() implementations")
