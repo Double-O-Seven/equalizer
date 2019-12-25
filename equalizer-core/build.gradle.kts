@@ -64,14 +64,6 @@ jacoco {
 
 val mavenJava by publishing.publications.creating(MavenPublication::class) {
     from(components["java"])
-    versionMapping {
-        usage("java-api") {
-            fromResolutionOf(configurations.runtimeClasspath.get())
-        }
-        usage("java-runtime") {
-            fromResolutionResult()
-        }
-    }
     pom {
         name.set("Equalizer")
         description.set("Fluent builders for correct equals() and hashCode() implementations")
