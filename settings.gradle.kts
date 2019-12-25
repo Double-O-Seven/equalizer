@@ -15,6 +15,7 @@
  */
 
 include(":equalizer-core")
+include(":equalizer-kotlin")
 include(":samples")
 
 rootProject.name = "equalizer"
