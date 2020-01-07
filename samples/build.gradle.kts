@@ -20,5 +20,6 @@ plugins {
 
 dependencies {
     implementation(project(":equalizer-core"))
+    implementation(project(":equalizer-kotlin"))
     implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8")
 }
