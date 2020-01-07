@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+package ch.leadrian.equalizer.samples.kotlin
+
 import ch.leadrian.equalizer.equals
 import ch.leadrian.equalizer.hashCode
 import ch.leadrian.equalizer.invoke
