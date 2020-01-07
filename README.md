@@ -115,7 +115,47 @@ public class Person {
 }
 ```
 
+You may also use it in Kotlin, in case data classes are not an option are you are required to use an array in `equals` or `hashCode`:
+
+```kotlin
+package org.mycompany
+
+import ch.leadrian.equalizer.equals
+import ch.leadrian.equalizer.hashCode
+import ch.leadrian.equalizer.invoke
+
+class Book(
+        val title: String,
+        val numberOfPages: Int,
+        val authors: Array<String>
+) {
+
+    companion object {
+
+        private val EQUALS = equals<Book> {
+            compare { title }
+            compareInt { numberOfPages }
+            compareDeep { authors }
+        }
+
+        private val HASH_CODE = hashCode<Book> {
+            hash { title }
+            hashInt { numberOfPages }
+            hashDeep { authors }
+        }
+
+    }
+
+    override fun equals(other: Any?): Boolean = EQUALS(this, other)
+
+    override fun hashCode(): Int = HASH_CODE(this)
+
+}
+```
+
 ## API
+
+### Java
 
 The basic API provides the following classes:
 
@@ -155,6 +195,69 @@ The basic API provides the following classes:
 *   `Equals.of`
 *   `HashCode.of`
 *   `EqualsAndHashCode.of`
+
+### Kotlin (since 1.2.0)
+
+There is also a simpler Kotlin DSL:
+
+`KotlinEqualsBuilder` includes inline variants of the `compare` methods of `EqualsBuilder`. All functions accept a lambda function with a receiver:
+*   `compare`
+*   `compareIdentity`
+*   `compareDeep`
+*   `compareByte`: Inlined variant of `comparePrimitive` for byte values
+*   `compareShort`: Inlined variant of `comparePrimitive` for short values
+*   `compareChar`: Inlined variant of `comparePrimitive` for char values
+*   `compareInt`: Inlined variant of `comparePrimitive` for int values
+*   `compareLong`: Inlined variant of `comparePrimitive` for long values
+*   `compareFloat`: Inlined variant of `comparePrimitive` for float values
+*   `compareDouble`: Inlined variant of `comparePrimitive` for double values
+*   `compareBoolean`: Inlined variant of `comparePrimitive` for boolean values
+
+`KotlinHashCodeBuilder` includes inline variants of the `hash` methods of `HashCodeBuilder`. All functions accept a lambda function with a receiver:
+*   `hash`
+*   `hashIdentity`
+*   `hashDeep`
+*   `hashByte`: Inlined variant of `hashPrimitive` for byte values
+*   `hashShort`: Inlined variant of `hashPrimitive` for short values
+*   `hashChar`: Inlined variant of `hashPrimitive` for char values
+*   `hashInt`: Inlined variant of `hashPrimitive` for int values
+*   `hashLong`: Inlined variant of `hashPrimitive` for long values
+*   `hashFloat`: Inlined variant of `hashPrimitive` for float values
+*   `hashDouble`: Inlined variant of `hashPrimitive` for double values
+*   `hashBoolean`: Inlined variant of `hashPrimitive` for boolean values
+
+`KotlinEqualsAndHashCodeBuilder` includes inline variants of the `compare` methods of `EqualsAndHashCodeBuilder`. All functions accept a lambda function with a receiver:
+*   `compare`
+*   `compareIdentity`
+*   `compareDeep`
+*   `compareByte`: Inlined variant of `comparePrimitive` for byte values
+*   `compareShort`: Inlined variant of `comparePrimitive` for short values
+*   `compareChar`: Inlined variant of `comparePrimitive` for char values
+*   `compareInt`: Inlined variant of `comparePrimitive` for int values
+*   `compareLong`: Inlined variant of `comparePrimitive` for long values
+*   `compareFloat`: Inlined variant of `comparePrimitive` for float values
+*   `compareDouble`: Inlined variant of `comparePrimitive` for double values
+*   `compareBoolean`: Inlined variant of `comparePrimitive` for boolean values
+*   `compareAndHash`
+*   `compareAndHashIdentity`
+*   `compareAndHashDeep`
+*   `compareAndHashByte`: Inlined variant of `compareAndHashPrimitive` for byte values
+*   `compareAndHashShort`: Inlined variant of `compareAndHashPrimitive` for short values
+*   `compareAndHashChar`: Inlined variant of `compareAndHashPrimitive` for char values
+*   `compareAndHashInt`: Inlined variant of `compareAndHashPrimitive` for int values
+*   `compareAndHashLong`: Inlined variant of `compareAndHashPrimitive` for long values
+*   `compareAndHashFloat`: Inlined variant of `compareAndHashPrimitive` for float values
+*   `compareAndHashDouble`: Inlined variant of `compareAndHashPrimitive` for double values
+*   `compareAndHashBoolean`: Inlined variant of `compareAndHashPrimitive` for boolean values
+
+Scoped builder functions:
+*   `equals`: Function that allows `this`-scoped configuration of a `KotlinEqualsBuilder`
+*   `hashCode`: Function that allows `this`-scoped configuration of a `KotlinHashCodeBuilder`
+*   `equalsAndHashCode`: Function that allows `this`-scoped configuration of a `KotlinEqualsAndHashCodeBuilder`
+
+`Equals` and `HashCode` and by inheritance `EqualsAndHashCode` are extended with the following extension methods:
+*   `Equals.invoke`
+*   `HashCode.invoke`
 
 ## Download
 
