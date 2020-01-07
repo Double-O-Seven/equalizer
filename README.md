@@ -115,7 +115,7 @@ public class Person {
 }
 ```
 
-You may also use it in Kotlin, in case data classes are not an option are you are required to use an array in `equals` or `hashCode`:
+You may also use it in Kotlin, in case data classes are not an option or you are required to use an array in `equals` or `hashCode`:
 
 ```kotlin
 package org.mycompany
