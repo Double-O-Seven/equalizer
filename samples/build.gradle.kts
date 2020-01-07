@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+plugins {
+    kotlin("jvm")
+}
+
 dependencies {
     implementation(project(":equalizer-core"))
+    implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8")
 }

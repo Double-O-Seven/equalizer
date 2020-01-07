@@ -19,3 +19,9 @@ include(":equalizer-kotlin")
 include(":samples")
 
 rootProject.name = "equalizer"
+
+pluginManagement {
+    plugins {
+        kotlin("jvm") version "1.3.61"
+    }
+}
