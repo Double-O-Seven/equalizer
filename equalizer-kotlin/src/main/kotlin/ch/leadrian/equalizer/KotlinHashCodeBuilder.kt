@@ -30,48 +30,48 @@ class KotlinHashCodeBuilder<T : Any>
 @PublishedApi
 internal constructor(delegate: HashCodeBuilder<T>) : HashCodeBuilder<T> by delegate {
 
-    inline fun hash(crossinline valueExtractor: T.() -> Any?): HashCodeBuilder<T> {
-        return hash(Function<T, Any?> { valueExtractor(it) })
+    inline fun hash(crossinline valueExtractor: T.() -> Any?) {
+        hash(Function<T, Any?> { valueExtractor(it) })
     }
 
-    inline fun hashIdentity(crossinline valueExtractor: T.() -> Any?): HashCodeBuilder<T> {
-        return hashIdentity(Function<T, Any?> { valueExtractor(it) })
+    inline fun hashIdentity(crossinline valueExtractor: T.() -> Any?) {
+        hashIdentity(Function<T, Any?> { valueExtractor(it) })
     }
 
-    inline fun hashDeep(crossinline valueExtractor: T.() -> Any?): HashCodeBuilder<T> {
-        return hashDeep(Function<T, Any?> { valueExtractor(it) })
+    inline fun hashDeep(crossinline valueExtractor: T.() -> Any?) {
+        hashDeep(Function<T, Any?> { valueExtractor(it) })
     }
 
-    inline fun hashByte(crossinline valueExtractor: T.() -> Byte): HashCodeBuilder<T> {
-        return hashPrimitive(ToByteFunction<T> { valueExtractor(it) })
+    inline fun hashByte(crossinline valueExtractor: T.() -> Byte) {
+        hashPrimitive(ToByteFunction<T> { valueExtractor(it) })
     }
 
-    inline fun hashShort(crossinline valueExtractor: T.() -> Short): HashCodeBuilder<T> {
-        return hashPrimitive(ToShortFunction<T> { valueExtractor(it) })
+    inline fun hashShort(crossinline valueExtractor: T.() -> Short) {
+        hashPrimitive(ToShortFunction<T> { valueExtractor(it) })
     }
 
-    inline fun hashChar(crossinline valueExtractor: T.() -> Char): HashCodeBuilder<T> {
-        return hashPrimitive(ToCharFunction<T> { valueExtractor(it) })
+    inline fun hashChar(crossinline valueExtractor: T.() -> Char) {
+        hashPrimitive(ToCharFunction<T> { valueExtractor(it) })
     }
 
-    inline fun hashInt(crossinline valueExtractor: T.() -> Int): HashCodeBuilder<T> {
-        return hashPrimitive(ToIntFunction<T> { valueExtractor(it) })
+    inline fun hashInt(crossinline valueExtractor: T.() -> Int) {
+        hashPrimitive(ToIntFunction<T> { valueExtractor(it) })
     }
 
-    inline fun hashLong(crossinline valueExtractor: T.() -> Long): HashCodeBuilder<T> {
-        return hashPrimitive(ToLongFunction<T> { valueExtractor(it) })
+    inline fun hashLong(crossinline valueExtractor: T.() -> Long) {
+        hashPrimitive(ToLongFunction<T> { valueExtractor(it) })
     }
 
-    inline fun hashFloat(crossinline valueExtractor: T.() -> Float): HashCodeBuilder<T> {
-        return hashPrimitive(ToFloatFunction<T> { valueExtractor(it) })
+    inline fun hashFloat(crossinline valueExtractor: T.() -> Float) {
+        hashPrimitive(ToFloatFunction<T> { valueExtractor(it) })
     }
 
-    inline fun hashDouble(crossinline valueExtractor: T.() -> Double): HashCodeBuilder<T> {
-        return hashPrimitive(ToDoubleFunction<T> { valueExtractor(it) })
+    inline fun hashDouble(crossinline valueExtractor: T.() -> Double) {
+        hashPrimitive(ToDoubleFunction<T> { valueExtractor(it) })
     }
 
-    inline fun hashBoolean(crossinline valueExtractor: T.() -> Boolean): HashCodeBuilder<T> {
-        return hashPrimitive(Predicate<T> { valueExtractor(it) })
+    inline fun hashBoolean(crossinline valueExtractor: T.() -> Boolean) {
+        hashPrimitive(Predicate<T> { valueExtractor(it) })
     }
 
 }

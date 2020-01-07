@@ -30,48 +30,48 @@ class KotlinEqualsBuilder<T : Any>
 @PublishedApi
 internal constructor(delegate: EqualsBuilder<T>) : EqualsBuilder<T> by delegate {
 
-    inline fun <reified U> compare(crossinline valueExtractor: T.() -> U): EqualsBuilder<T> {
-        return compare(Function<T, Any?> { valueExtractor(it) })
+    inline fun <reified U> compare(crossinline valueExtractor: T.() -> U) {
+        compare(Function<T, Any?> { valueExtractor(it) })
     }
 
-    inline fun compareIdentity(crossinline valueExtractor: T.() -> Any?): EqualsBuilder<T> {
-        return compareIdentity(Function<T, Any?> { valueExtractor(it) })
+    inline fun compareIdentity(crossinline valueExtractor: T.() -> Any?) {
+        compareIdentity(Function<T, Any?> { valueExtractor(it) })
     }
 
-    inline fun compareDeep(crossinline valueExtractor: T.() -> Any?): EqualsBuilder<T> {
-        return compareDeep(Function<T, Any?> { valueExtractor(it) })
+    inline fun compareDeep(crossinline valueExtractor: T.() -> Any?) {
+        compareDeep(Function<T, Any?> { valueExtractor(it) })
     }
 
-    inline fun compareByte(crossinline valueExtractor: T.() -> Byte): EqualsBuilder<T> {
-        return comparePrimitive(ToByteFunction<T> { valueExtractor(it) })
+    inline fun compareByte(crossinline valueExtractor: T.() -> Byte) {
+        comparePrimitive(ToByteFunction<T> { valueExtractor(it) })
     }
 
-    inline fun compareShort(crossinline valueExtractor: T.() -> Short): EqualsBuilder<T> {
-        return comparePrimitive(ToShortFunction<T> { valueExtractor(it) })
+    inline fun compareShort(crossinline valueExtractor: T.() -> Short) {
+        comparePrimitive(ToShortFunction<T> { valueExtractor(it) })
     }
 
-    inline fun compareChar(crossinline valueExtractor: T.() -> Char): EqualsBuilder<T> {
-        return comparePrimitive(ToCharFunction<T> { valueExtractor(it) })
+    inline fun compareChar(crossinline valueExtractor: T.() -> Char) {
+        comparePrimitive(ToCharFunction<T> { valueExtractor(it) })
     }
 
-    inline fun compareInt(crossinline valueExtractor: T.() -> Int): EqualsBuilder<T> {
-        return comparePrimitive(ToIntFunction<T> { valueExtractor(it) })
+    inline fun compareInt(crossinline valueExtractor: T.() -> Int) {
+        comparePrimitive(ToIntFunction<T> { valueExtractor(it) })
     }
 
-    inline fun compareLong(crossinline valueExtractor: T.() -> Long): EqualsBuilder<T> {
-        return comparePrimitive(ToLongFunction<T> { valueExtractor(it) })
+    inline fun compareLong(crossinline valueExtractor: T.() -> Long) {
+        comparePrimitive(ToLongFunction<T> { valueExtractor(it) })
     }
 
-    inline fun compareFloat(crossinline valueExtractor: T.() -> Float): EqualsBuilder<T> {
-        return comparePrimitive(ToFloatFunction<T> { valueExtractor(it) })
+    inline fun compareFloat(crossinline valueExtractor: T.() -> Float) {
+        comparePrimitive(ToFloatFunction<T> { valueExtractor(it) })
     }
 
-    inline fun compareDouble(crossinline valueExtractor: T.() -> Double): EqualsBuilder<T> {
-        return comparePrimitive(ToDoubleFunction<T> { valueExtractor(it) })
+    inline fun compareDouble(crossinline valueExtractor: T.() -> Double) {
+        comparePrimitive(ToDoubleFunction<T> { valueExtractor(it) })
     }
 
-    inline fun compareBoolean(crossinline valueExtractor: T.() -> Boolean): EqualsBuilder<T> {
-        return comparePrimitive(Predicate<T> { valueExtractor(it) })
+    inline fun compareBoolean(crossinline valueExtractor: T.() -> Boolean) {
+        comparePrimitive(Predicate<T> { valueExtractor(it) })
     }
 
 }
