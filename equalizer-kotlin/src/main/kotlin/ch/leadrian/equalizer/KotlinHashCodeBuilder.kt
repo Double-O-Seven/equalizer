@@ -26,50 +26,120 @@ import java.util.function.ToDoubleFunction
 import java.util.function.ToIntFunction
 import java.util.function.ToLongFunction
 
+/**
+ * A Kotlin-specific [HashCodeBuilder] that includes some inline functions which provide a simplified Kotlin DSL
+ * for Equalizer.
+ */
 class KotlinHashCodeBuilder<T : Any>
 @PublishedApi
 internal constructor(delegate: HashCodeBuilder<T>) : HashCodeBuilder<T> by delegate {
 
+    /**
+     * Inline variant of [HashCodeBuilder.hash] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hash
+     */
     inline fun hash(crossinline valueExtractor: T.() -> Any?) {
         hash(Function<T, Any?> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashIdentity] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashIdentity
+     */
     inline fun hashIdentity(crossinline valueExtractor: T.() -> Any?) {
         hashIdentity(Function<T, Any?> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashDeep] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashDeep
+     */
     inline fun hashDeep(crossinline valueExtractor: T.() -> Any?) {
         hashDeep(Function<T, Any?> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashByte(crossinline valueExtractor: T.() -> Byte) {
         hashPrimitive(ToByteFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashShort(crossinline valueExtractor: T.() -> Short) {
         hashPrimitive(ToShortFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashChar(crossinline valueExtractor: T.() -> Char) {
         hashPrimitive(ToCharFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashInt(crossinline valueExtractor: T.() -> Int) {
         hashPrimitive(ToIntFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashLong(crossinline valueExtractor: T.() -> Long) {
         hashPrimitive(ToLongFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashFloat(crossinline valueExtractor: T.() -> Float) {
         hashPrimitive(ToFloatFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashDouble(crossinline valueExtractor: T.() -> Double) {
         hashPrimitive(ToDoubleFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [HashCodeBuilder.hashPrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see HashCodeBuilder.hashPrimitive
+     */
     inline fun hashBoolean(crossinline valueExtractor: T.() -> Boolean) {
         hashPrimitive(Predicate<T> { valueExtractor(it) })
     }

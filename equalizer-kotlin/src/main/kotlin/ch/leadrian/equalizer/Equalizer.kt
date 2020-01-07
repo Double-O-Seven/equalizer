@@ -17,7 +17,7 @@
 package ch.leadrian.equalizer
 
 /**
- * DSL function for a more Kotlin-esque configuration of an `Equals` instance.
+ * DSL function for a more Kotlin-esque configuration of an [Equals] instance.
  *
  * Example:
  *
@@ -40,7 +40,7 @@ inline fun <reified T : Any> equals(block: KotlinEqualsBuilder<T>.() -> Unit): E
 }
 
 /**
- * DSL function for a more Kotlin-esque configuration of an `HashCode` instance.
+ * DSL function for a more Kotlin-esque configuration of an [HashCode] instance.
  *
  * Example:
  *
@@ -63,7 +63,7 @@ inline fun <T : Any> hashCode(block: KotlinHashCodeBuilder<T>.() -> Unit): HashC
 }
 
 /**
- * DSL function for a more Kotlin-esque configuration of an `EqualsAndHashCode` instance.
+ * DSL function for a more Kotlin-esque configuration of an [EqualsAndHashCode] instance.
  *
  * Example:
  *
@@ -87,7 +87,7 @@ inline fun <reified T : Any> equalsAndHashCode(block: KotlinEqualsAndHashCodeBui
 }
 
 /**
- * Short form of `Equals.equals(first, second)`.
+ * Short form of [Equals.equals].
  *
  * Example:
  *
@@ -108,7 +108,7 @@ inline fun <reified T : Any> equalsAndHashCode(block: KotlinEqualsAndHashCodeBui
 operator fun <T : Any> Equals<T>.invoke(first: T, second: Any?): Boolean = equals(first, second)
 
 /**
- * Short form of `HashCode.hashCode(target)`.
+ * Short form of [HashCode.hashCode].
  *
  * Example:
  *

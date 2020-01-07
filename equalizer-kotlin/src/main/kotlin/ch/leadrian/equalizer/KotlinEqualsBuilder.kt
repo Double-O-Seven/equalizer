@@ -26,50 +26,120 @@ import java.util.function.ToDoubleFunction
 import java.util.function.ToIntFunction
 import java.util.function.ToLongFunction
 
+/**
+ * A Kotlin-specific [EqualsBuilder] that includes some inline functions which provide a simplified Kotlin DSL
+ * for Equalizer.
+ */
 class KotlinEqualsBuilder<T : Any>
 @PublishedApi
 internal constructor(delegate: EqualsBuilder<T>) : EqualsBuilder<T> by delegate {
 
+    /**
+     * Inline variant of [EqualsBuilder.compare] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.compare
+     */
     inline fun <reified U> compare(crossinline valueExtractor: T.() -> U) {
         compare(Function<T, Any?> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.compareIdentity] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.compareIdentity
+     */
     inline fun compareIdentity(crossinline valueExtractor: T.() -> Any?) {
         compareIdentity(Function<T, Any?> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.compareDeep] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.compareDeep
+     */
     inline fun compareDeep(crossinline valueExtractor: T.() -> Any?) {
         compareDeep(Function<T, Any?> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareByte(crossinline valueExtractor: T.() -> Byte) {
         comparePrimitive(ToByteFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareShort(crossinline valueExtractor: T.() -> Short) {
         comparePrimitive(ToShortFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareChar(crossinline valueExtractor: T.() -> Char) {
         comparePrimitive(ToCharFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareInt(crossinline valueExtractor: T.() -> Int) {
         comparePrimitive(ToIntFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareLong(crossinline valueExtractor: T.() -> Long) {
         comparePrimitive(ToLongFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareFloat(crossinline valueExtractor: T.() -> Float) {
         comparePrimitive(ToFloatFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareDouble(crossinline valueExtractor: T.() -> Double) {
         comparePrimitive(ToDoubleFunction<T> { valueExtractor(it) })
     }
 
+    /**
+     * Inline variant of [EqualsBuilder.comparePrimitive] takes accepts a lambda function with an instance of [T] as the receiver.
+     *
+     * @param valueExtractor the lambda function used to extract a value within the scope of an instance of [T].
+     * @see EqualsBuilder.comparePrimitive
+     */
     inline fun compareBoolean(crossinline valueExtractor: T.() -> Boolean) {
         comparePrimitive(Predicate<T> { valueExtractor(it) })
     }
