@@ -22,7 +22,6 @@ plugins {
 }
 
 val junitVersion = "5.5.1"
-val kotlinVersion = "1.3.61"
 
 val gitVersion: Closure<String> by extra
 
