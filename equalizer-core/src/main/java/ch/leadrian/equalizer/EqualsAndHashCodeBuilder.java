@@ -30,10 +30,9 @@ import java.util.function.ToLongFunction;
 
 /**
  * A builder for {@link EqualsAndHashCode}. It is used to configure which attributes of type {@link T} are used to
- * determine equality between two instances of type {@code T} as well as the attributes used to compute the hash code
- * of an instance of type {@code T}.
- * Use {@link EqualsAndHashCode} to guarantee that the attributes used to compute the hash code are a subset of the
- * attributes used to determine equivalence of two instances of type {@code T}.
+ * determine equality between two instances of type {@code T} as well as the attributes used to compute the hash code of
+ * an instance of type {@code T}. Use {@link EqualsAndHashCode} to guarantee that the attributes used to compute the
+ * hash code are a subset of the attributes used to determine equivalence of two instances of type {@code T}.
  *
  * @param <T> type for which an {@link EqualsAndHashCode} instance should be built
  * @see Equals
@@ -45,7 +44,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Applies {@code superEqualsAndHashCode} when computing equivalence and hash code.
      *
-     * @param superEqualsAndHashCode {@link Equals} instance used to compute the equivalence and hash code for a supertype of {@code T}.
+     * @param superEqualsAndHashCode {@link Equals} instance used to compute the equivalence and hash code for a
+     *                               supertype of {@code T}.
      * @return {@code this}
      * @see EqualsBuilder#withSuper(Equals)
      * @see HashCodeBuilder#withSuper(HashCode)
@@ -66,7 +66,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure the {@link Equals} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#compare(Function)
      */
@@ -75,7 +76,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure the {@link Equals} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#compare(Function)
      */
@@ -165,7 +167,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#compare(Function)
      * @see HashCodeBuilder#hash(Function)
@@ -175,7 +178,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(ToByteFunction)
      * @see HashCodeBuilder#hashPrimitive(ToByteFunction)
@@ -185,7 +189,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(ToShortFunction)
      * @see HashCodeBuilder#hashPrimitive(ToShortFunction)
@@ -195,7 +200,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(ToCharFunction)
      * @see HashCodeBuilder#hashPrimitive(ToCharFunction)
@@ -205,7 +211,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(ToIntFunction)
      * @see HashCodeBuilder#hashPrimitive(ToIntFunction)
@@ -215,7 +222,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(ToLongFunction)
      * @see HashCodeBuilder#hashPrimitive(ToLongFunction)
@@ -225,7 +233,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(ToFloatFunction)
      * @see HashCodeBuilder#hashPrimitive(ToFloatFunction)
@@ -235,7 +244,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(ToDoubleFunction)
      * @see HashCodeBuilder#hashPrimitive(ToDoubleFunction)
@@ -245,7 +255,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#comparePrimitive(Predicate)
      * @see HashCodeBuilder#hashPrimitive(Predicate)
@@ -255,7 +266,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#compareDeep(Function)
      * @see HashCodeBuilder#hashDeep(Function)
@@ -265,7 +277,8 @@ public interface EqualsAndHashCodeBuilder<T> {
     /**
      * Configure both the {@link Equals} part and {@link HashCode} part of {@link EqualsAndHashCode}.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      * @see EqualsBuilder#compareIdentity(Function)
      * @see HashCodeBuilder#hashIdentity(Function)
@@ -288,5 +301,15 @@ public interface EqualsAndHashCodeBuilder<T> {
      * the equivalence of two instances of type {@code T} and compute the hash code of an instance of type {@code T}.
      */
     EqualsAndHashCode<T> build();
+
+    /**
+     * Returns whether the builder has any comparison/hash steps or not.
+     * <p>
+     * If the builder is empty, that resulting {@link HashCode} will use reference equality checks and identity hash
+     * code.
+     *
+     * @return {@code true} if at least one comparison/hash step has been added, else {@code false}
+     */
+    boolean isEmpty();
 
 }

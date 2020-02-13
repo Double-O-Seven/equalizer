@@ -181,5 +181,12 @@ final class EqualsImpl<T> implements Equals<T> {
         public Equals<T> build() {
             return new EqualsImpl<>(targetClass, comparisonSteps, classMatcher);
         }
+
+        @Override
+        public boolean isEmpty() {
+            return comparisonSteps.isEmpty();
+        }
+
     }
+
 }

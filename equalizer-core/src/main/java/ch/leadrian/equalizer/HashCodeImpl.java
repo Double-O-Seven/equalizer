@@ -141,5 +141,12 @@ final class HashCodeImpl<T> implements HashCode<T> {
         public HashCode<T> build() {
             return new HashCodeImpl<>(hashSteps);
         }
+
+        @Override
+        public boolean isEmpty() {
+            return hashSteps.isEmpty();
+        }
+
     }
+
 }

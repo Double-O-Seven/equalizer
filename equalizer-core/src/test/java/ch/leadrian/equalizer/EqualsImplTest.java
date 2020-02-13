@@ -132,4 +132,37 @@ class EqualsImplTest implements EqualsTestBase {
                 .isFalse();
     }
 
+    @Test
+    void givenNoComparisonStepBuilderShouldBeEmpty() {
+        EqualsBuilder<TestObject> builder = new EqualsImpl.Builder<>(TestObject.class);
+
+        boolean result = builder.isEmpty();
+
+        assertThat(result)
+                .isTrue();
+    }
+
+    @Test
+    void givenOneComparisonStepBuilderShouldNotBeEmpty() {
+        EqualsBuilder<TestObject> builder = new EqualsImpl.Builder<>(TestObject.class)
+                .compare(TestObject::getStringValue);
+
+        boolean result = builder.isEmpty();
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @Test
+    void givenMultipleComparisonStepsBuilderShouldNotBeEmpty() {
+        EqualsBuilder<TestObject> builder = new EqualsImpl.Builder<>(TestObject.class)
+                .compare(TestObject::getStringValue)
+                .comparePrimitive(TestObject::getIntValue);
+
+        boolean result = builder.isEmpty();
+
+        assertThat(result)
+                .isFalse();
+    }
+
 }
