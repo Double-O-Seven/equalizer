@@ -249,7 +249,21 @@ final class EqualsAndHashCodeImpl<T> implements EqualsAndHashCode<T> {
 
         @Override
         public EqualsAndHashCode<T> build() {
+            validate();
             return new EqualsAndHashCodeImpl<>(equalsBuilder.build(), hashCodeBuilder.build());
         }
+
+        private void validate() {
+            if (!equalsBuilder.isEmpty() && hashCodeBuilder.isEmpty()) {
+                throw new IllegalStateException("If at least one comparison step has configured, then at least one hash step must be configured as well");
+            }
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return equalsBuilder.isEmpty() && hashCodeBuilder.isEmpty();
+        }
+
     }
+
 }

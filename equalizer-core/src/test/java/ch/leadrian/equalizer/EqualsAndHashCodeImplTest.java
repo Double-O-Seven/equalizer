@@ -25,6 +25,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 class EqualsAndHashCodeImplTest {
@@ -70,7 +71,7 @@ class EqualsAndHashCodeImplTest {
             TestObject testObject1 = testObject();
             TestObject testObject2 = testObject();
             EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                    .compare(TestObject::getStringValue)
+                    .compareAndHash(TestObject::getStringValue)
                     .classMatcher((v1, v2) -> false)
                     .build();
 
@@ -85,7 +86,7 @@ class EqualsAndHashCodeImplTest {
             TestObject testObject1 = testObject();
             TestObject testObject2 = testObject();
             EqualsAndHashCode<TestObject> equalsAndHashCode = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
-                    .compare(TestObject::getStringValue)
+                    .compareAndHash(TestObject::getStringValue)
                     .equalIf((value1, value2) -> false)
                     .build();
 
@@ -93,6 +94,18 @@ class EqualsAndHashCodeImplTest {
 
             assertThat(result)
                     .isFalse();
+        }
+
+        @Test
+        void givenComparisonStepButNotHashStepItShouldThrowException() {
+            EqualsAndHashCodeBuilder<TestObject> builder = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compare(TestObject::getStringValue);
+
+            Throwable caughtThrowable = catchThrowable(builder::build);
+
+            assertThat(caughtThrowable)
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("If at least one comparison step has configured, then at least one hash step must be configured as well");
         }
 
         @Nested
@@ -398,6 +411,68 @@ class EqualsAndHashCodeImplTest {
             assertThat(result)
                     .isEqualTo(31 + Boolean.hashCode(booleanValue));
         }
+
+    }
+
+    @Nested
+    class IsEmptyTests {
+
+        @Test
+        void givenNeitherComparisonStepsNorHashStepsItShouldReturnTrue() {
+            EqualsAndHashCodeBuilder<TestObject> builder = new EqualsAndHashCodeImpl.Builder<>(TestObject.class);
+
+            boolean result = builder.isEmpty();
+
+            assertThat(result)
+                    .isTrue();
+        }
+
+        @Test
+        void givenOneComparisonStepItShouldReturnFalse() {
+            EqualsAndHashCodeBuilder<TestObject> builder = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compare(TestObject::getStringValue);
+
+            boolean result = builder.isEmpty();
+
+            assertThat(result)
+                    .isFalse();
+        }
+
+        @Test
+        void givenMultipleComparisonStepsItShouldReturnFalse() {
+            EqualsAndHashCodeBuilder<TestObject> builder = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compare(TestObject::getStringValue)
+                    .compare(TestObject::getIntValue);
+
+            boolean result = builder.isEmpty();
+
+            assertThat(result)
+                    .isFalse();
+        }
+
+        @Test
+        void givenOneComparisonStepAndHashStepItShouldReturnFalse() {
+            EqualsAndHashCodeBuilder<TestObject> builder = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getStringValue);
+
+            boolean result = builder.isEmpty();
+
+            assertThat(result)
+                    .isFalse();
+        }
+
+        @Test
+        void givenMultipleComparisonStepAndHashStepsItShouldReturnFalse() {
+            EqualsAndHashCodeBuilder<TestObject> builder = new EqualsAndHashCodeImpl.Builder<>(TestObject.class)
+                    .compareAndHash(TestObject::getStringValue)
+                    .compareAndHash(TestObject::getIntValue);
+
+            boolean result = builder.isEmpty();
+
+            assertThat(result)
+                    .isFalse();
+        }
+
     }
 
     @SuppressWarnings("StringOperationCanBeSimplified")

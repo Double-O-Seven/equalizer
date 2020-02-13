@@ -34,7 +34,6 @@ class HashCodeImplTest {
                 .isInstanceOf(HashCodeImpl.class);
     }
 
-
     @Test
     void givenValueIsNullItShouldReturnZero() {
         HashCode<TestObject> hashCode = new HashCodeImpl.Builder<TestObject>().build();
@@ -228,6 +227,40 @@ class HashCodeImplTest {
                 .isEqualTo(31 + Boolean.hashCode(booleanValue));
     }
 
+    @Test
+    void givenNoHashStepBuilderShouldBeEmpty() {
+        HashCodeBuilder<TestObject> builder = new HashCodeImpl.Builder<>();
+
+        boolean result = builder.isEmpty();
+
+        assertThat(result)
+                .isTrue();
+    }
+
+    @Test
+    void givenOneHashStepBuilderShouldNotBeEmpty() {
+        HashCodeBuilder<TestObject> builder = new HashCodeImpl.Builder<TestObject>()
+                .hash(TestObject::getStringValue)
+                .hash(TestObject::getIntValue);
+
+        boolean result = builder.isEmpty();
+
+        assertThat(result)
+                .isFalse();
+    }
+
+    @Test
+    void givenMultipleHashStepsBuilderShouldNotBeEmpty() {
+        HashCodeBuilder<TestObject> builder = new HashCodeImpl.Builder<TestObject>()
+                .hash(TestObject::getStringValue)
+                .hash(TestObject::getIntValue);
+
+        boolean result = builder.isEmpty();
+
+        assertThat(result)
+                .isFalse();
+    }
+
     private static ImmutableTestObject testObject() {
         return ImmutableTestObject
                 .builder()
@@ -245,4 +278,5 @@ class HashCodeImplTest {
                 .booleanValue(true)
                 .build();
     }
+
 }

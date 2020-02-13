@@ -29,8 +29,8 @@ import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
 /**
- * A builder for {@link Equals}. It is used to configure which attributes of type {@link T} are used to
- * determine equality between two instances of type {@code T}.
+ * A builder for {@link Equals}. It is used to configure which attributes of type {@link T} are used to determine
+ * equality between two instances of type {@code T}.
  *
  * @param <T> type for which an {@link Equals} instance should be built
  * @see Equals
@@ -38,8 +38,8 @@ import java.util.function.ToLongFunction;
 public interface EqualsBuilder<T> {
 
     /**
-     * If the equivalence check performed by {@code superEquals} is successful, then two instance of type {@code T}
-     * are equal, if all other equivalence checks succeed as well, else, if equivalence is not given by {@code superEquals},
+     * If the equivalence check performed by {@code superEquals} is successful, then two instance of type {@code T} are
+     * equal, if all other equivalence checks succeed as well, else, if equivalence is not given by {@code superEquals},
      * two instances of type {@code T} are not considered equal.
      *
      * @param superEquals {@link Equals} instance used to compute the equivalence for a supertype of {@code T}.
@@ -48,8 +48,8 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> withSuper(Equals<? super T> superEquals);
 
     /**
-     * Configure a class matcher. By default, {@link ClassMatchers#instanceOf(Class)} is used. You may override
-     * this using this method.
+     * Configure a class matcher. By default, {@link ClassMatchers#instanceOf(Class)} is used. You may override this
+     * using this method.
      *
      * @param classMatcher class matcher used to determine whether two instances of {@code T} can be compared
      * @return {@code this}
@@ -59,19 +59,20 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> classMatcher(ClassMatcher<T> classMatcher);
 
     /**
-     * Configures an {@link Equals} instance to compare object values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare object values extracted by {@code valueExtractor} to determine
+     * the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed
+     * to be non-null.
      *
-     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts an object value of an instance of type {@code T}. The extracted value may be
+     *                       {@code null}.
      * @return {@code this}
      */
     EqualsBuilder<T> compare(Function<? super T, ?> valueExtractor);
 
     /**
      * Configures an {@link Equals} instance to compare byte values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed to
+     * be non-null.
      *
      * @param valueExtractor Extracts a byte value of an instance of type {@code T}.
      * @return {@code this}
@@ -79,9 +80,9 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> comparePrimitive(ToByteFunction<? super T> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare short values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare short values extracted by {@code valueExtractor} to determine
+     * the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed
+     * to be non-null.
      *
      * @param valueExtractor Extracts a short value of an instance of type {@code T}.
      * @return {@code this}
@@ -89,9 +90,9 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> comparePrimitive(ToShortFunction<? super T> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare character values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare character values extracted by {@code valueExtractor} to
+     * determine the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is
+     * guaranteed to be non-null.
      *
      * @param valueExtractor Extracts a character value of an instance of type {@code T}.
      * @return {@code this}
@@ -99,9 +100,9 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> comparePrimitive(ToCharFunction<? super T> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare integer values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare integer values extracted by {@code valueExtractor} to determine
+     * the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed
+     * to be non-null.
      *
      * @param valueExtractor Extracts a integer value of an instance of type {@code T}.
      * @return {@code this}
@@ -110,8 +111,8 @@ public interface EqualsBuilder<T> {
 
     /**
      * Configures an {@link Equals} instance to compare long values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed to
+     * be non-null.
      *
      * @param valueExtractor Extracts a long value of an instance of type {@code T}.
      * @return {@code this}
@@ -119,9 +120,9 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> comparePrimitive(ToLongFunction<? super T> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare float values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare float values extracted by {@code valueExtractor} to determine
+     * the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed
+     * to be non-null.
      *
      * @param valueExtractor Extracts a float value of an instance of type {@code T}.
      * @return {@code this}
@@ -129,9 +130,9 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> comparePrimitive(ToFloatFunction<? super T> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare double values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare double values extracted by {@code valueExtractor} to determine
+     * the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed
+     * to be non-null.
      *
      * @param valueExtractor Extracts a double value of an instance of type {@code T}.
      * @return {@code this}
@@ -139,9 +140,9 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> comparePrimitive(ToDoubleFunction<? super T> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare boolean values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare boolean values extracted by {@code valueExtractor} to determine
+     * the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is guaranteed
+     * to be non-null.
      *
      * @param valueExtractor Extracts a boolean value of an instance of type {@code T}.
      * @return {@code this}
@@ -149,23 +150,24 @@ public interface EqualsBuilder<T> {
     EqualsBuilder<T> comparePrimitive(Predicate<? super T> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare object values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * This comparison should in general be used to compare the contents of arrays, object or primitives. If a non-array
-     * object is passed, a default object equivalence check will be performed.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare object values extracted by {@code valueExtractor} to determine
+     * the equivalence between two instances of type {@code T}. This comparison should in general be used to compare the
+     * contents of arrays, object or primitives. If a non-array object is passed, a default object equivalence check
+     * will be performed. The value passed to {@code valueExtractor} is guaranteed to be non-null.
      *
-     * @param valueExtractor Extracts a object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts a object value of an instance of type {@code T}. The extracted value may be {@code
+     *                       null}.
      * @return {@code this}
      */
     EqualsBuilder<T> compareDeep(Function<? super T, ?> valueExtractor);
 
     /**
-     * Configures an {@link Equals} instance to compare the references of values extracted by {@code valueExtractor} to determine the
-     * equivalence between two instances of type {@code T}.
-     * The value passed to {@code valueExtractor} is guaranteed to be non-null.
+     * Configures an {@link Equals} instance to compare the references of values extracted by {@code valueExtractor} to
+     * determine the equivalence between two instances of type {@code T}. The value passed to {@code valueExtractor} is
+     * guaranteed to be non-null.
      *
-     * @param valueExtractor Extracts a object value of an instance of type {@code T}. The extracted value may be {@code null}.
+     * @param valueExtractor Extracts a object value of an instance of type {@code T}. The extracted value may be {@code
+     *                       null}.
      * @return {@code this}
      */
     EqualsBuilder<T> compareIdentity(Function<? super T, ?> valueExtractor);
@@ -182,9 +184,18 @@ public interface EqualsBuilder<T> {
     /**
      * Builds an {@link Equals} instance.
      *
-     * @return An instance of {@link Equals} that uses the configured {@code valueExtractor}s to determine the equivalence of
-     * two instances of type {@code T}.
+     * @return An instance of {@link Equals} that uses the configured {@code valueExtractor}s to determine the
+     * equivalence of two instances of type {@code T}.
      */
     Equals<T> build();
+
+    /**
+     * Returns whether the builder has any comparison steps or not.
+     * <p>
+     * If the builder is empty, that resulting {@link HashCode} will use reference equality checks.
+     *
+     * @return {@code true} if at least one comparison step has been added, else {@code false}
+     */
+    boolean isEmpty();
 
 }
