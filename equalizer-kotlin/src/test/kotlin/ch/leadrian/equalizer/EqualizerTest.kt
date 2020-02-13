@@ -543,6 +543,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal string value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compare { stringValue }
                 }
                 val object1 = TestObject(stringValue = "foo")
@@ -557,6 +558,7 @@ internal class EqualizerTest {
             @Test
             fun `given different string value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compare { stringValue }
                 }
                 val object1 = TestObject(stringValue = "foo")
@@ -571,6 +573,7 @@ internal class EqualizerTest {
             @Test
             fun `given same object value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareIdentity { objectValue }
                 }
                 val value = TestObject()
@@ -586,6 +589,7 @@ internal class EqualizerTest {
             @Test
             fun `given different object value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareIdentity { objectValue }
                 }
                 val object1 = TestObject(objectValue = TestObject())
@@ -600,6 +604,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal array value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareDeep { arrayValue }
                 }
                 val array1 = TestObject(arrayValue = arrayOf("foo"))
@@ -614,6 +619,7 @@ internal class EqualizerTest {
             @Test
             fun `given different array value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareDeep { arrayValue }
                 }
                 val array1 = TestObject(arrayValue = arrayOf("foo"))
@@ -628,6 +634,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal byte value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareByte { byteValue }
                 }
                 val object1 = TestObject(byteValue = 5)
@@ -642,6 +649,7 @@ internal class EqualizerTest {
             @Test
             fun `given different byte value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareByte { byteValue }
                 }
                 val object1 = TestObject(byteValue = 5)
@@ -656,6 +664,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal short value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareShort { shortValue }
                 }
                 val object1 = TestObject(shortValue = 5)
@@ -670,6 +679,7 @@ internal class EqualizerTest {
             @Test
             fun `given different short value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareShort { shortValue }
                 }
                 val object1 = TestObject(shortValue = 5)
@@ -684,6 +694,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal char value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareChar { charValue }
                 }
                 val object1 = TestObject(charValue = 'a')
@@ -698,6 +709,7 @@ internal class EqualizerTest {
             @Test
             fun `given different char value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareChar { charValue }
                 }
                 val object1 = TestObject(charValue = 'a')
@@ -712,6 +724,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal int value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareInt { intValue }
                 }
                 val object1 = TestObject(intValue = 5)
@@ -726,6 +739,7 @@ internal class EqualizerTest {
             @Test
             fun `given different int value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareInt { intValue }
                 }
                 val object1 = TestObject(intValue = 5)
@@ -740,6 +754,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal long value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareLong { longValue }
                 }
                 val object1 = TestObject(longValue = 5)
@@ -754,6 +769,7 @@ internal class EqualizerTest {
             @Test
             fun `given different long value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareLong { longValue }
                 }
                 val object1 = TestObject(longValue = 5)
@@ -768,6 +784,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal float value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareFloat { floatValue }
                 }
                 val object1 = TestObject(floatValue = 5f)
@@ -782,6 +799,7 @@ internal class EqualizerTest {
             @Test
             fun `given different float value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareFloat { floatValue }
                 }
                 val object1 = TestObject(floatValue = 5f)
@@ -796,6 +814,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal double value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareDouble { doubleValue }
                 }
                 val object1 = TestObject(doubleValue = 5.0)
@@ -810,6 +829,7 @@ internal class EqualizerTest {
             @Test
             fun `given different double value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareDouble { doubleValue }
                 }
                 val object1 = TestObject(doubleValue = 5.0)
@@ -824,6 +844,7 @@ internal class EqualizerTest {
             @Test
             fun `given equal boolean value it should return true`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareBoolean { booleanValue }
                 }
                 val object1 = TestObject(booleanValue = true)
@@ -838,6 +859,7 @@ internal class EqualizerTest {
             @Test
             fun `given different boolean value it should return false`() {
                 val equals = equalsAndHashCode<TestObject> {
+                    compareAndHash { 0 }
                     compareBoolean { booleanValue }
                 }
                 val object1 = TestObject(booleanValue = true)
