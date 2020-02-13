@@ -17,6 +17,7 @@
 import groovy.lang.Closure
 
 plugins {
+    kotlin("jvm") apply false
     `java-library`
     id("com.palantir.git-version") version "0.12.0-rc2"
 }
