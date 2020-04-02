@@ -24,8 +24,6 @@ plugins {
     id("com.palantir.git-version") version "0.12.2"
 }
 
-val junitVersion = "5.6.1"
-
 val gitVersion: Closure<String> by extra
 
 allprojects {
@@ -48,11 +46,12 @@ subprojects {
         }
 
         dependencies {
-            testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
-            testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-params", version = junitVersion)
+            testImplementation(platform("org.junit:junit-bom:5.6.1"))
+            testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api")
+            testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-params")
             testImplementation(group = "org.assertj", name = "assertj-core", version = "3.15.0")
 
-            testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
+            testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine")
         }
 
         tasks.test {
