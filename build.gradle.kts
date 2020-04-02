@@ -19,10 +19,10 @@ import groovy.lang.Closure
 plugins {
     kotlin("jvm") apply false
     `java-library`
-    id("com.palantir.git-version") version "0.12.0-rc2"
+    id("com.palantir.git-version") version "0.12.2"
 }
 
-val junitVersion = "5.5.1"
+val junitVersion = "5.6.1"
 
 val gitVersion: Closure<String> by extra
 
@@ -42,7 +42,7 @@ subprojects {
     dependencies {
         testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api", version = junitVersion)
         testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-params", version = junitVersion)
-        testImplementation(group = "org.assertj", name = "assertj-core", version = "3.12.1")
+        testImplementation(group = "org.assertj", name = "assertj-core", version = "3.15.0")
 
         testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine", version = junitVersion)
     }
