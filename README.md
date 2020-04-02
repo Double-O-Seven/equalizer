@@ -153,23 +153,46 @@ class Book(
 }
 ```
 
-## Download
+## Downloads
+
+### Core
 
 For Maven:
 ```xml
 <dependency>
   <groupId>ch.leadrian.equalizer</groupId>
   <artifactId>equalizer-core</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.1</version>
 </dependency>
 ```
 
 For Gradle (Groovy DSL):
 ```groovy
-implementation 'ch.leadrian.equalizer:equalizer-core:1.1.0'
+implementation 'ch.leadrian.equalizer:equalizer-core:1.2.1'
 ```
 
 For Gradle (Kotlin DSL):
 ```groovy
-implementation("ch.leadrian.equalizer:equalizer-core:1.1.0")
+implementation("ch.leadrian.equalizer:equalizer-core:1.2.1")
+```
+
+### Kotlin
+
+For Maven:
+```xml
+<dependency>
+  <groupId>ch.leadrian.equalizer</groupId>
+  <artifactId>equalizer-kotlin</artifactId>
+  <version>1.2.1</version>
+</dependency>
+```
+
+For Gradle (Groovy DSL):
+```groovy
+implementation 'ch.leadrian.equalizer:equalizer-kotlin:1.2.1'
+```
+
+For Gradle (Kotlin DSL):
+```groovy
+implementation("ch.leadrian.equalizer:equalizer-kotlin:1.2.1")
 ```
