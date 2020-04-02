@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-include(":equalizer-bom")
-include(":equalizer-core")
-include(":equalizer-kotlin")
-include(":samples")
+plugins {
+    `java-platform`
+    `maven-publish`
+}
 
-rootProject.name = "equalizer"
-
-pluginManagement {
-    plugins {
-        kotlin("jvm") version "1.3.61"
+dependencies {
+    constraints {
+        api(project(":equalizer-core"))
+        api(project(":equalizer-kotlin"))
     }
 }
