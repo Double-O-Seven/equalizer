@@ -15,11 +15,12 @@
  */
 
 plugins {
+    `java-library`
     kotlin("jvm")
 }
 
 dependencies {
     implementation(project(":equalizer-core"))
     implementation(project(":equalizer-kotlin"))
-    implementation(group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8")
+    implementation(kotlin("stdlib-jdk8"))
 }
