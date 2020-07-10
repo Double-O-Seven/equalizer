@@ -16,9 +16,8 @@
 
 plugins {
     `java-library`
-    `maven-publish`
+    `maven-publish-conventions`
     jacoco
-    signing
     kotlin("jvm")
     id("org.jetbrains.dokka")
 }

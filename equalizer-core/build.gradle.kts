@@ -16,7 +16,7 @@
 
 plugins {
     `java-library`
-    `maven-publish`
+    `maven-publish-conventions`
     jacoco
 }
 

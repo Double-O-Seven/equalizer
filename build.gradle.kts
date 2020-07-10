@@ -19,8 +19,6 @@ import groovy.lang.Closure
 plugins {
     kotlin("jvm") apply false
     `java-library`
-    `maven-publish`
-    signing
     `code-coverage-report`
     id("com.palantir.git-version") version "0.12.2"
 }
@@ -57,61 +55,6 @@ subprojects {
 
         tasks.test {
             useJUnitPlatform()
-        }
-    }
-
-    pluginManager.withPlugin("maven-publish") {
-        apply(plugin = "signing")
-
-        val mavenJava by publishing.publications.creating(MavenPublication::class) {
-            components.findByName("java")?.let { from(it) }
-            components.findByName("javaPlatform")?.let { from(it) }
-            pom {
-                name.set("Equalizer (${this@subprojects.name})")
-                description.set("Fluent builders for correct equals() and hashCode() implementations")
-                url.set("https://github.com/Double-O-Seven/equalizer")
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("Double-O-Seven")
-                        name.set("Adrian-Philipp Leuenberger")
-                        email.set("thewishwithin@gmail.com")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/Double-O-Seven/equalizer.git")
-                    developerConnection.set("scm:git:ssh://github.com/Double-O-Seven/equalizer.git")
-                    url.set("https://github.com/Double-O-Seven/equalizer")
-                }
-            }
-        }
-
-        publishing {
-            repositories {
-                maven {
-                    val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-                    val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-                    url = when {
-                        version.toString().endsWith("SNAPSHOT") -> snapshotsRepoUrl
-                        else -> releasesRepoUrl
-                    }
-                    credentials {
-                        val ossrhUsername: String? by extra
-                        val ossrhPassword: String? by extra
-                        username = ossrhUsername
-                        password = ossrhPassword
-                    }
-                }
-            }
-        }
-
-        signing {
-            sign(mavenJava)
         }
     }
 }
