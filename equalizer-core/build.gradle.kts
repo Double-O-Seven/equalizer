@@ -20,37 +20,7 @@ plugins {
     jacoco
 }
 
-val codacyCoverageReport: Configuration by configurations.creating
-
 dependencies {
     testAnnotationProcessor(group = "org.immutables", name = "value", version = "2.8.3")
     testImplementation(group = "org.immutables", name = "value", version = "2.8.3", classifier = "annotations")
-
-    codacyCoverageReport(group = "com.codacy", name = "codacy-coverage-reporter", version = "7.1.0")
-}
-
-jacoco {
-    toolVersion = "0.8.4"
-}
-
-tasks {
-    jacocoTestReport {
-        dependsOn(test)
-        reports {
-            xml.isEnabled = true
-        }
-    }
-}
-
-task<JavaExec>("codacyCoverageReport") {
-    dependsOn(tasks.jacocoTestReport)
-    main = "com.codacy.CodacyCoverageReporter"
-    classpath = codacyCoverageReport
-    args(
-            "report",
-            "-l",
-            "Java",
-            "-r",
-            "$buildDir/reports/jacoco/test/jacocoTestReport.xml"
-    )
 }

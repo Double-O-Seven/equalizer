@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-include(":equalizer-bom")
-include(":equalizer-core")
-include(":equalizer-kotlin")
-include(":samples")
+plugins {
+    `kotlin-dsl`
+}
 
-rootProject.name = "equalizer"
+repositories {
+    jcenter()
+    gradlePluginPortal()
+}
 
-pluginManagement {
-    plugins {
-        kotlin("jvm") version "1.3.72"
-    }
+dependencies {
+    implementation(kotlin("gradle-plugin"))
+    implementation(group = "org.jetbrains.dokka", name = "dokka-gradle-plugin", version = "0.10.1")
 }

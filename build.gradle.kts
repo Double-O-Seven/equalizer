@@ -21,6 +21,7 @@ plugins {
     `java-library`
     `maven-publish`
     signing
+    `code-coverage-report`
     id("com.palantir.git-version") version "0.12.2"
 }
 

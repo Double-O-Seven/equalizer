@@ -17,9 +17,10 @@
 plugins {
     `java-library`
     `maven-publish`
+    jacoco
     signing
     kotlin("jvm")
-    id("org.jetbrains.dokka") version "0.10.0"
+    id("org.jetbrains.dokka")
 }
 
 dependencies {
