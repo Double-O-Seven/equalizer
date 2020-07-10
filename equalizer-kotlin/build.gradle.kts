@@ -17,7 +17,6 @@
 plugins {
     `kotlin-library-conventions`
     `maven-publish-conventions`
-    jacoco
 }
 
 dependencies {
