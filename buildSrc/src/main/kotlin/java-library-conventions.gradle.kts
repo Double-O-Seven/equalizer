@@ -15,10 +15,25 @@
  */
 
 plugins {
-    `kotlin-library-conventions`
+    `java-library`
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 dependencies {
-    implementation(project(":equalizer-core"))
-    implementation(project(":equalizer-kotlin"))
+    testImplementation(platform("org.junit:junit-bom:5.6.1"))
+    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-api")
+    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter-params")
+    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.16.1")
+
+    testRuntimeOnly(group = "org.junit.jupiter", name = "junit-jupiter-engine")
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }

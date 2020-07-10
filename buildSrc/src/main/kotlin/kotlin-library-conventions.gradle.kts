@@ -15,10 +15,17 @@
  */
 
 plugins {
-    `kotlin-library-conventions`
+    id("java-library-conventions")
+    kotlin("jvm")
+    id("org.jetbrains.dokka")
 }
 
 dependencies {
-    implementation(project(":equalizer-core"))
-    implementation(project(":equalizer-kotlin"))
+    implementation(kotlin("stdlib-jdk8"))
+}
+
+tasks {
+    named<Jar>("javadocJar") {
+        from(dokka)
+    }
 }

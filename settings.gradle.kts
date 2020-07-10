@@ -24,5 +24,7 @@ rootProject.name = "equalizer"
 pluginManagement {
     plugins {
         kotlin("jvm") version "1.3.72"
+        id("com.github.ben-manes.versions") version "0.28.0"
+        id("com.palantir.git-version") version "0.12.3"
     }
 }

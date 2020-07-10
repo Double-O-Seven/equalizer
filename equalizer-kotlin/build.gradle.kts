@@ -15,21 +15,11 @@
  */
 
 plugins {
-    `java-library`
+    `kotlin-library-conventions`
     `maven-publish-conventions`
     jacoco
-    kotlin("jvm")
-    id("org.jetbrains.dokka")
 }
 
 dependencies {
     api(project(":equalizer-core"))
-
-    implementation(kotlin("stdlib-jdk8"))
-}
-
-tasks {
-    javadocJar {
-        from(dokka)
-    }
 }
